@@ -1,0 +1,59 @@
+{
+    "name": "xpressengine-plugin/page",
+    "description": "XpressEngine's page plugin for bundle (XE)",
+    "keywords": [
+        "xpressengine bundle",
+        "XE page",
+        "Xpressengine3 page"
+    ],
+    "version": "0.1.0",
+    "authors": [
+        {
+            "name": "XE Team",
+            "email": "developers@xpressengine.com",
+            "homepage": "http://xpressengine.io",
+            "role": "Developer"
+        }
+    ],
+    "license": "LGPL",
+    "type": "xpressengine-plugin",
+    "extra": {
+        "xpressengine": {
+            "title": "Page",
+            "component": {
+                "module/page@page": {
+                    "class": "Xpressengine\\Plugins\\Page\\Module\\Page",
+                    "name": "Simple Page",
+                    "description": "basic Page",
+                    "screenshot": [
+                        "/plugins/page/assets/img/screenshots/page1.png",
+                        "/plugins/page/assets/img/screenshots/page2.png"
+                    ]
+                },
+                "module/page@page/skin/page@default": {
+                    "class": "Xpressengine\\Plugins\\Page\\Skin\\DefaultSkin",
+                    "name": "Page Default Skin",
+                    "description": "Page Module Default Skin",
+                    "screenshot" : []
+                },
+                "module/page@page/settingsSkin/page@default": {
+                    "class": "Xpressengine\\Plugins\\Page\\Skin\\SettingsSkin",
+                    "name": "Page Default Skin for Manager",
+                    "description": "Page Default Skin for Manager",
+                    "screenshot" : []
+                }
+            }
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://packagist.xpressengine.io"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Xpressengine\\Plugins\\Page\\": "src/"
+        }
+    }
+}
