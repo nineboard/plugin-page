@@ -14,9 +14,9 @@
 namespace Xpressengine\Plugins\Page;
 
 use Xpressengine\Document\DocumentEntity;
-use Xpressengine\Member\Entities\MemberEntityInterface;
 use Xpressengine\Plugins\CommentService\CommentUsable;
 use Xpressengine\Support\EntityTrait;
+use Xpressengine\User\UserInterface;
 
 /**
  * Page Entity
@@ -61,7 +61,7 @@ class PageEntity implements CommentUsable
     /**
      * Returns author
      *
-     * @return MemberEntityInterface
+     * @return UserInterface
      */
     public function getAuthor()
     {
