@@ -226,19 +226,19 @@ class PageManageController extends Controller
 
         $string = Request::get('string');
 
-        /** @var \Xpressengine\Member\Repositories\Database\MemberRepository $member */
-        $member = app('xe.members');
+        /** @var \Xpressengine\User\Repositories\UserRepository $member */
+        $member = app('xe.users');
 
         // 10개 안되면 전체 DB 에서 찾아보자
         if (count($userIds) < 10) {
-            $users = $member->getConnection()->table('member')->whereNotIn('id', $userIds)
+            $users = $member->query()->whereNotIn('id', $userIds)
                 ->where('displayName', 'like', $string . '%')->get(['id']);
             foreach ($users as $user) {
                 $userIds[] = $user['id'];
             }
         }
 
-        $users = $member->getConnection()->table('member')->whereIn('id', $userIds)
+        $users = $member->query()->whereIn('id', $userIds)
             ->where('displayName', 'like', $string . '%')->get(['id', 'displayName', 'profileImage']);
 
         foreach ($users as $user) {
