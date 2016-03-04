@@ -13,9 +13,8 @@
  */
 namespace Xpressengine\Plugins\Page;
 
-use Xpressengine\Document\DocumentEntity;
-use Xpressengine\Plugins\CommentService\CommentUsable;
-use Xpressengine\Support\EntityTrait;
+use Xpressengine\Plugins\Comment\CommentUsable;
+use Xpressengine\Support\Entity;
 use Xpressengine\User\UserInterface;
 
 /**
@@ -34,10 +33,8 @@ use Xpressengine\User\UserInterface;
  * @license     http://www.gnu.org/licenses/lgpl-3.0-standalone.html LGPL
  * @link        http://www.xpressengine.com
  */
-class PageEntity implements CommentUsable
+class PageEntity extends Entity implements CommentUsable
 {
-    use EntityTrait;
-
     /**
      * Returns unique identifier
      *

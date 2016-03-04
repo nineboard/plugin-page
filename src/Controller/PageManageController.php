@@ -18,9 +18,9 @@ use Request;
 use Redirect;
 use Presenter;
 use App;
-use Xpressengine\Menu\MenuRetrieveHandler;
-use Xpressengine\Document\DocumentEntity;
-use Xpressengine\Plugins\CommentService\ManageSection as CommentSection;
+use Xpressengine\Document\Models\Document;
+use Xpressengine\Menu\Models\MenuItem;
+use Xpressengine\Plugins\Comment\ManageSection as CommentSection;
 use Xpressengine\Plugins\Page\Module\Page as PageModule;
 use Xpressengine\Plugins\Page\PageEntity;
 use Xpressengine\Plugins\Page\PageHandler;
@@ -54,16 +54,15 @@ class PageManageController extends Controller
     /**
      * edit
      *
-     * @param MenuRetrieveHandler $menuHandler
      * @param string              $pageId page instance id
      *
      * @return \Xpressengine\Presenter\RendererInterface
      */
-    public function edit(MenuRetrieveHandler $menuHandler, $pageId)
+    public function edit($pageId)
     {
         $handler = $this->pageHandler;
 
-        $item = $menuHandler->getItem($pageId);
+        $item = MenuItem::find($pageId);
         $menuId = $item->menuId;
 
         $locales = app('config')->get('xe.lang.locales');
@@ -77,7 +76,7 @@ class PageManageController extends Controller
             $pcPage = new PageEntity([
                 'pageId' => $pageId,
                 'uid' => null,
-                'content' => new DocumentEntity,
+                'content' => new Document,
             ]);
         } else {
             $pcPage = $handler->getPageEntity($pageId, 'pc', $currentLocale);
@@ -88,7 +87,7 @@ class PageManageController extends Controller
             $mobilePage = new PageEntity([
                 'pageId' => $pageId,
                 'uid' => null,
-                'content' => new DocumentEntity,
+                'content' => new Document,
             ]);
         } else {
             $mobilePage = $handler->getPageEntity($pageId, 'mobile', $currentLocale);

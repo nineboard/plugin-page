@@ -15,14 +15,16 @@ namespace Xpressengine\Plugins\Page;
 
 use Auth;
 use XeDB;
-use Xpressengine\Member\GuardInterface;
-use Xpressengine\Plugins\CommentService\Module as CommentModule;
+use Xpressengine\Document\Models\Document;
+use Xpressengine\User\GuardInterface;
+use Xpressengine\Plugins\Comment\Module as CommentModule;
 use Xpressengine\Plugins\Page\Module\Page as PageModule;
 use Xpressengine\Document\DocumentHandler;
 use Xpressengine\Keygen\Keygen;
 use Xpressengine\Config\ConfigEntity;
 use Xpressengine\Document\DocumentEntity;
 use Xpressengine\Config\ConfigManager;
+use Xpressengine\User\UserInterface;
 
 /**
  * Page handler
@@ -125,23 +127,23 @@ class PageHandler
     public function getPageEntity($pageId, $mode, $locale)
     {
         $config = $this->getPageConfig($pageId);
-        $uids = $config->get('pcUids');
+        $documentIds = $config->get('pcUids');
         if ($mode == 'mobile') {
-            $uids = $config->get('mobileUids');
+            $documentIds = $config->get('mobileUids');
         }
 
-        if (isset($uids[$locale])) {
-            $uid = $uids[$locale];
+        if (isset($documentIds[$locale])) {
+            $documentId = $documentIds[$locale];
         } else {
-            $uid = array_shift($uids);
+            $documentId = array_shift($documentIds);
         }
 
-        $content = $this->document->get($uid, $pageId);
+        $content = $this->document->get($documentId, $pageId);
 
         $pageEntity = new PageEntity(
             [
                 'pageId' => $pageId,
-                'uid' => $uid,
+                'uid' => $documentId,
                 'content' => $content,
             ]
         );
@@ -229,20 +231,21 @@ class PageHandler
      *
      * @return string
      * @throws \Exception
-     * @throws \Xpressengine\Keygen\UnknownGeneratorException
      */
     public function createPageDocument($pageId, $pageTitle, $locale)
     {
-        $doc = new DocumentEntity();
-        $doc->id = (new Keygen())->generate();
+        $doc = new Document();
         $doc->instanceId = $pageId;
         $doc->title = $pageTitle;
         $doc->locale = $locale;
-        $doc->setAuthor($this->auth->user());
+        /** @var UserInterface $user */
+        $user = $this->auth->user();
+        $doc->writer = $user->getDisplayName();
+        $doc->user()->associate($user);
 
         XeDB::beginTransaction();
         try {
-            $this->document->add($doc);
+            $this->document->put($doc);
         } catch (\Exception $e) {
             XeDB::rollback();
             throw $e;
@@ -350,7 +353,7 @@ class PageHandler
      * @param string $id     page content id
      * @param string $pageId page instance id
      *
-     * @return DocumentEntity
+     * @return Document
      */
     public function getPageContent($id, $pageId)
     {
@@ -380,7 +383,7 @@ class PageHandler
     public function createCommentInstance($pageId, $commentInput)
     {
         if ($commentInput === 'true') {
-            $comment = CommentModule::getHandler();
+            $comment = app('xe.plugin.comment')->getHandler();
             if (!$comment->existInstance($pageId)) {
                 $comment->createInstance($pageId);
             }

@@ -96,7 +96,6 @@ class Page extends AbstractModule
                 'uses' => 'PageManageController@suggestionMention'
             ]);
         }, ['namespace' => 'Xpressengine\Plugins\Page\Controller']);
-
     }
 
     /**
@@ -116,7 +115,6 @@ class Page extends AbstractModule
 
         }, ['namespace' => 'Xpressengine\Plugins\Page\Controller']);
     }
-
 
     /**
      * Return Create Form View

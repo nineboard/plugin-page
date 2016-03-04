@@ -14,17 +14,15 @@
 namespace Xpressengine\Plugins\Page\Controller;
 
 use App\Http\Controllers\Controller;
-use Request;
+use Presenter;
 use XeLang;
-use Xpressengine\Member\GuardInterface;
+use Xpressengine\Document\Exceptions\DocumentNotFoundException;
+use Xpressengine\Document\Models\Document;
+use Xpressengine\Http\Request;
 use Xpressengine\Plugins\Page\Module\Page as PageModule;
 use Xpressengine\Plugins\Page\PageEntity;
-use Presenter;
-use Xpressengine\Document\Exceptions\DocumentNotExistsException;
 use Xpressengine\Plugins\Page\PageHandler;
 use Xpressengine\Routing\InstanceConfig;
-use Xpressengine\Keygen\Keygen;
-use Xpressengine\Document\DocumentEntity;
 
 /**
  * Page User Controller
@@ -85,17 +83,16 @@ class PageUserController extends Controller
     /**
      * preview
      *
-     * @param PageHandler    $pageHandler page handler
-     * @param GuardInterface $guard       member
+     * @param Request     $request
+     * @param PageHandler $pageHandler page handler
      *
      * @return \Xpressengine\Presenter\RendererInterface
-     * @throws \Xpressengine\Keygen\UnknownGeneratorException
      */
-    public function preview(PageHandler $pageHandler, GuardInterface $guard)
+    public function preview(Request $request, PageHandler $pageHandler)
     {
         $pageId = $this->pageId;
         $config = $pageHandler->getPageConfig($pageId);
-        $user = $guard->user();
+        $user = $request->user();
 
         /** @var \Illuminate\Http\Request $request */
         $request = app('request');
@@ -115,14 +112,10 @@ class PageUserController extends Controller
             '_files'
         );
 
-        $previewDoc = new DocumentEntity($documentInputs);
-        $previewDoc->id = 'preview-' . (new Keygen())->generate();
+        $previewDoc = new Document($documentInputs);
+        $previewDoc->id = 'preview-' . app('xe.keygen')->generate();
         $previewDoc->instanceId = $pageId;
-        $previewDoc->setAuthor($user);
-
-        if ($user instanceof Guest) {
-            $previewDoc->setUserType($previewDoc::USER_TYPE_GUEST);
-        }
+        $previewDoc->user()->associate($user);
 
         $page = new PageEntity([
             'pageId' => $pageId,
@@ -206,7 +199,7 @@ class PageUserController extends Controller
 
         try {
             $doc = $handler->getPageContent($documentUid, $pageId);
-        } catch (DocumentNotExistsException $e) {
+        } catch (DocumentNotFoundException $e) {
             throw new $e;
         }
 
