@@ -13,17 +13,14 @@
  */
 namespace Xpressengine\Plugins\Page;
 
-use Auth;
 use XeDB;
+use Xpressengine\Config\ConfigEntity;
+use Xpressengine\Config\ConfigManager;
+use Xpressengine\Document\DocumentHandler;
 use Xpressengine\Document\Models\Document;
-use Xpressengine\User\GuardInterface;
 use Xpressengine\Plugins\Comment\Module as CommentModule;
 use Xpressengine\Plugins\Page\Module\Page as PageModule;
-use Xpressengine\Document\DocumentHandler;
-use Xpressengine\Keygen\Keygen;
-use Xpressengine\Config\ConfigEntity;
-use Xpressengine\Document\DocumentEntity;
-use Xpressengine\Config\ConfigManager;
+use Xpressengine\User\GuardInterface;
 use Xpressengine\User\UserInterface;
 
 /**
