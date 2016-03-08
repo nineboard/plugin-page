@@ -13,7 +13,7 @@
  */
 namespace Xpressengine\Plugins\Page\Module;
 
-use Cfg;
+use XeConfig;
 use Xpressengine\Plugins\Page\PageHandler;
 use View;
 use Xpressengine\Module\AbstractModule;
@@ -123,7 +123,7 @@ class Page extends AbstractModule
      */
     public function createMenuForm()
     {
-        $config = Cfg::get(self::getId());   // 기본 설정
+        $config = XeConfig::get(self::getId());   // 기본 설정
         $form = View::file(__DIR__ . '/../../views/menuType/menuCreate.blade.php', [
             'config' => $config,
         ]);

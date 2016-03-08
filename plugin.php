@@ -13,7 +13,7 @@
  */
 namespace Xpressengine\Plugins\Page;
 
-use Cfg;
+use XeConfig;
 use Xpressengine\Plugin\AbstractPlugin;
 use App;
 use XeLang;
@@ -48,8 +48,8 @@ class PagePlugin extends AbstractPlugin
      */
     public function activate($installedVersion = null)
     {
-        if (Cfg::get('module/page@page') === null) {
-            Cfg::add('module/page@page', []);
+        if (XeConfig::get('module/page@page') === null) {
+            XeConfig::add('module/page@page', []);
         }
     }
 
