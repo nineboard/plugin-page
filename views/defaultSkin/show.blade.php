@@ -1,4 +1,4 @@
-{{ Frontend::title($title) }}
+{{ XeFrontend::title($title) }}
 
 {!! uio('contentCompiler', ['content' => $content]) !!}
 
