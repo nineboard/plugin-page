@@ -16,7 +16,7 @@ namespace Xpressengine\Plugins\Page\Controller;
 use App\Http\Controllers\Controller;
 use Request;
 use Redirect;
-use Presenter;
+use XePresenter;
 use App;
 use Xpressengine\Document\Models\Document;
 use Xpressengine\Menu\Models\MenuItem;
@@ -47,7 +47,7 @@ class PageManageController extends Controller
      */
     public function __construct()
     {
-        Presenter::setSettingsSkin(PageModule::getId());
+        XePresenter::setSettingsSkin(PageModule::getId());
         $this->pageHandler = app('xe.page.handler');
     }
 
@@ -96,7 +96,7 @@ class PageManageController extends Controller
         $commentSection = new CommentSection();
         $sectionPresenter = $commentSection->setting($pageId);
 
-        return Presenter::make('edit', [
+        return XePresenter::make('edit', [
             'pcPage' => $pcPage,
             'mobilePage' => $mobilePage,
             'menuId' => $menuId,
@@ -184,7 +184,7 @@ class PageManageController extends Controller
             }
         }
 
-        return Presenter::makeApi([
+        return XePresenter::makeApi([
             'file' => $file->toArray(),
             'media' => $media,
             'thumbnails' => $thumbnails,
@@ -209,7 +209,7 @@ class PageManageController extends Controller
             $words[] = $tagEntity->word;
         }
 
-        return Presenter::makeApi($words);
+        return XePresenter::makeApi($words);
     }
 
     /**
@@ -256,6 +256,6 @@ class PageManageController extends Controller
                 'profileImage' => $user['profileImage'],
             ];
         }
-        return Presenter::makeApi($suggestions);
+        return XePresenter::makeApi($suggestions);
     }
 }

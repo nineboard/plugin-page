@@ -14,7 +14,7 @@
 namespace Xpressengine\Plugins\Page\Controller;
 
 use App\Http\Controllers\Controller;
-use Presenter;
+use XePresenter;
 use XeLang;
 use Xpressengine\Document\Exceptions\DocumentNotFoundException;
 use Xpressengine\Document\Models\Document;
@@ -46,7 +46,7 @@ class PageUserController extends Controller
      */
     public function __construct()
     {
-        Presenter::setSkin(PageModule::getId());
+        XePresenter::setSkin(PageModule::getId());
         $instanceConfig = InstanceConfig::instance();
         $this->pageId = $instanceConfig->getInstanceId();
     }
@@ -71,7 +71,7 @@ class PageUserController extends Controller
 
         $page = $pageHandler->getPageEntity($pageId, $mode, XeLang::getLocale());
 
-        return Presenter::make('show', [
+        return XePresenter::make('show', [
             'pageId' => $pageId,
             'page' => $page,
             'title' => $page->content->title,
@@ -124,7 +124,7 @@ class PageUserController extends Controller
         ]);
         $content = $previewDoc->content;
 
-        return Presenter::make('show', [
+        return XePresenter::make('show', [
             'pageId' => $pageId,
             'page' => $page,
             'title' => $title,
