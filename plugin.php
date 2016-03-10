@@ -101,7 +101,12 @@ class PagePlugin extends AbstractPlugin
         $app->singleton(
             'xe.page.handler',
             function ($app) {
-                return new PageHandler($app['xe.document'], $app['xe.config'], $app['xe.auth']);
+                return new PageHandler(
+                    $app['xe.document'],
+                    $app['xe.plugin.comment']->getHandler(),
+                    $app['xe.config'],
+                    $app['xe.auth']
+                );
             }
         );
 

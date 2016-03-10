@@ -19,6 +19,7 @@ use Xpressengine\Config\ConfigManager;
 use Xpressengine\Document\DocumentHandler;
 use Xpressengine\Document\Models\Document;
 use Xpressengine\Plugins\Comment\Module as CommentModule;
+use Xpressengine\Plugins\Comment\Handler as CommentHandler;
 use Xpressengine\Plugins\Page\Module\Page as PageModule;
 use Xpressengine\User\GuardInterface;
 use Xpressengine\User\UserInterface;
@@ -41,6 +42,11 @@ class PageHandler
     protected $document;
 
     /**
+     * @var CommentHandler
+     */
+    protected $comment;
+
+    /**
      * @var \Xpressengine\Config\ConfigManager
      */
     protected $configManager;
@@ -50,16 +56,19 @@ class PageHandler
     private $auth;
 
     /**
-     * @param DocumentHandler $document      document handler
+     * @param DocumentHandler $document document handler
+     * @param CommentHandler  $comment comment handler
      * @param ConfigManager   $configManager config manager
-     * @param GuardInterface  $auth          auth interface
+     * @param GuardInterface  $auth auth interface
      */
     public function __construct(
         DocumentHandler $document,
+        CommentHandler $comment,
         ConfigManager $configManager,
         GuardInterface $auth
     ) {
         $this->document = $document;
+        $this->comment = $comment;
         $this->configManager = $configManager;
         $this->auth = $auth;
     }
@@ -180,6 +189,7 @@ class PageHandler
                     ]
                 )
             );
+
             $this->createCommentInstance($pageId, $inputs['comment']);
         } catch (\Exception $e) {
             XeDB::rollBack();
@@ -380,9 +390,9 @@ class PageHandler
     public function createCommentInstance($pageId, $commentInput)
     {
         if ($commentInput === 'true') {
-            $comment = app('xe.plugin.comment')->getHandler();
-            if (!$comment->existInstance($pageId)) {
-                $comment->createInstance($pageId);
+            if ($this->comment->getInstanceId($pageId) === null) {
+                $this->comment->createInstance($pageId);
+                $this->comment->configure($this->comment->getInstanceId($pageId), ['useWysiwyg' => true]);
             }
         }
     }
