@@ -42,7 +42,7 @@ class PageEntity extends Entity implements CommentUsable
      */
     public function getUid()
     {
-        return $this->__get('pcUid');
+        return $this->__get('uid');
     }
 
     /**
@@ -62,7 +62,7 @@ class PageEntity extends Entity implements CommentUsable
      */
     public function getAuthor()
     {
-        return $this->__get('pcContent')->getAuthor();
+        return $this->__get('content')->user;
     }
 }
 
