@@ -47,7 +47,7 @@ class PageManageController extends Controller
      */
     public function __construct()
     {
-        XePresenter::setSettingsSkin(PageModule::getId());
+        XePresenter::setSettingsModule(PageModule::getId());
         $this->pageHandler = app('xe.page.handler');
     }
 
