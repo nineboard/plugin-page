@@ -46,7 +46,7 @@ class PageUserController extends Controller
      */
     public function __construct()
     {
-        XePresenter::setSkinTargtId(PageModule::getId());
+        XePresenter::setSkinTargetId(PageModule::getId());
         $instanceConfig = InstanceConfig::instance();
         $this->pageId = $instanceConfig->getInstanceId();
     }
