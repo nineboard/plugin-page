@@ -1,7 +1,7 @@
 <div class="panel menu_detail">
     <div class="panel-heading">
         <div class="row">
-            <p class="txt_tit">Page 의 기본적인 설정을 입력합니다.</p>
+            <p class="text-title">Page 의 기본적인 설정을 입력합니다.</p>
             <div class="right_btn">
                 <button class="ico_gray"><i class="xi-angle-down"></i><span class="blind">닫기</span></button>
             </div>
