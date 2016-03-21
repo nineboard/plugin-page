@@ -14,6 +14,7 @@
 namespace Xpressengine\Plugins\Page;
 
 use Xpressengine\Plugins\Comment\CommentUsable;
+use Xpressengine\Routing\InstanceRoute;
 use Xpressengine\Support\Entity;
 use Xpressengine\User\UserInterface;
 
@@ -63,6 +64,17 @@ class PageEntity extends Entity implements CommentUsable
     public function getAuthor()
     {
         return $this->__get('content')->user;
+    }
+
+    /**
+     * Returns the link
+     *
+     * @param InstanceRoute $route route instance
+     * @return string
+     */
+    public function getLink(InstanceRoute $route)
+    {
+        return $route->url;
     }
 }
 

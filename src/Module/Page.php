@@ -239,4 +239,26 @@ class Page extends AbstractModule
     {
         return route('manage.plugin.page.edit', $instanceId);
     }
+
+    /**
+     * Get menu type's item object
+     *
+     * @param string $id item id of menu type
+     * @return mixed
+     */
+    public function getTypeItem($id)
+    {
+        $request = app('request');
+
+        $doc = app('xe.document')->get($id);
+        $pageId = $doc->instanceId;
+        $config = $this->getPageHandler()->getPageConfig($pageId);
+
+        $mode = 'pc';
+        if ($config->get('mobile') && $request->isMobile()) {
+            $mode = 'mobile';
+        }
+
+        return $this->getPageHandler()->getPageEntity($pageId, $mode, \XeLang::getLocale());
+    }
 }
