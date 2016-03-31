@@ -181,7 +181,7 @@
 
 <script type="text/javascript">
 
-    XE.$(function($) {
+    $(function($) {
         $('.__xe_btn_preview').on('click', function() {
             var form = $(this).closest('form');
 
