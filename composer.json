@@ -20,6 +20,7 @@
     "extra": {
         "xpressengine": {
             "title": "Page",
+            "icon": "icon.png",
             "component": {
                 "module/page@page": {
                     "class": "Xpressengine\\Plugins\\Page\\Module\\Page",
