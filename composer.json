@@ -49,7 +49,7 @@
     "repositories": [
         {
             "type": "composer",
-            "url": "http://packagist.xpressengine.io"
+            "url": "https://packagist.xpressengine.io"
         }
     ],
     "autoload": {
