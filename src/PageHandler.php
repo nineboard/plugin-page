@@ -243,6 +243,7 @@ class PageHandler
     {
         $doc = new Document();
         $doc->instanceId = $pageId;
+        $doc->type = PageModule::getId();
         $doc->title = $pageTitle;
         $doc->locale = $locale;
         /** @var UserInterface $user */
