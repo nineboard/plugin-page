@@ -89,16 +89,12 @@ class PageManageController extends Controller
             $mobilePage = $handler->getPageEntity($pageId, 'mobile', $currentLocale);
         }
 
-        $commentSection = new CommentSection();
-        $sectionPresenter = $commentSection->setting($pageId);
-
         return XePresenter::make('edit', [
             'pcPage' => $pcPage,
             'mobilePage' => $mobilePage,
             'menuId' => $menuId,
             'pageId' => $pageId,
             'config' => $config,
-            'commentSection' => $sectionPresenter,
             'currentLocale' => $currentLocale,
             'locales' => $locales,
             'siteLocale' => $siteLocale,

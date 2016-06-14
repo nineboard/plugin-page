@@ -170,10 +170,10 @@
                 </h4>
 
             </div>
-            <div id="commentSection" class="panel-collapse collapse">
+            <div id="commentSection" class="panel-collapse collapse in">
                 <div class="panel-body">
                     @if($config->get('comment'))
-                    {!! $commentSection !!}
+                    댓글 설정페이지로 이동합니다 <a href="{{ app('xe.plugin.comment')->getInstanceSettingURI($pageId) }}">[설정 페이지로 이동]</a>
                     @else
                     코멘트 사용이 설정되어 있지 않습니다. <a href="{{route('settings.menu.edit.item', [$menuId, $pageId])}}">[설정 페이지로 이동]</a>
                     @endif
