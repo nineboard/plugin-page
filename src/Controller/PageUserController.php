@@ -23,6 +23,9 @@ use Xpressengine\Plugins\Page\Module\Page as PageModule;
 use Xpressengine\Plugins\Page\PageEntity;
 use Xpressengine\Plugins\Page\PageHandler;
 use Xpressengine\Routing\InstanceConfig;
+use Xpressengine\Storage\File;
+use Xpressengine\Storage\Storage;
+use Xpressengine\Media\Models\Image;
 
 /**
  * Page User Controller
@@ -139,25 +142,24 @@ class PageUserController extends Controller
      */
     public function fileSource($url, $id)
     {
-        /** @var \Xpressengine\Storage\Storage $storage */
-        $storage = app('xe.storage');
-        $file = $storage->get($id);
+        $file = File::find($id);
 
         /** @var \Xpressengine\Media\MediaManager $mediaManager */
         $mediaManager = \App::make('xe.media');
         if ($mediaManager->is($file) === true) {
-            /** @var \Xpressengine\Media\Handlers\ImageHandler $handler */
-            $handler = $mediaManager->getHandler(\Xpressengine\Media\Spec\Media::TYPE_IMAGE);
             $dimension = 'L';
             if (\Agent::isMobile() === true) {
                 $dimension = 'M';
             }
-            $media = $handler->getThumbnail($mediaManager->make($file), PageModule::THUMBNAIL_TYPE, $dimension);
-            $file = $media->getFile();
+            $media = Image::getThumbnail(
+                $mediaManager->make($file),
+                PageModule::THUMBNAIL_TYPE,
+                $dimension
+            );
         }
 
-        header('Content-type: ' . $file->mime);
-        echo $storage->read($file);
+        header('Content-type: ' . $media->mime);
+        echo $media->getContent();
     }
 
     /**

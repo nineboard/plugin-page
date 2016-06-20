@@ -28,7 +28,7 @@ use App;
  */
 class Page extends AbstractModule
 {
-    const FILE_UPLOAD_PATH = 'attached/page';
+    const FILE_UPLOAD_PATH = 'page';
     const THUMBNAIL_TYPE = 'spill';
 
     /**
