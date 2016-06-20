@@ -158,7 +158,7 @@ class PageManageController extends Controller
             throw new \Exception;
         }
 
-        $file = $storage->upload($uploadedFile, PageModule::FILE_UPLOAD_PATH, null, 'plugin');
+        $file = $storage->upload($uploadedFile, PageModule::FILE_UPLOAD_PATH);
 
         /** @var \Xpressengine\Media\MediaManager $mediaManager */
         $mediaManager = \App::make('xe.media');
