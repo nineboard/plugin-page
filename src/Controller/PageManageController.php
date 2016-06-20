@@ -19,8 +19,6 @@ use Redirect;
 use XePresenter;
 use App;
 use Xpressengine\Document\Models\Document;
-use Xpressengine\Menu\Models\MenuItem;
-use Xpressengine\Plugins\Comment\ManageSection as CommentSection;
 use Xpressengine\Plugins\Page\Module\Page as PageModule;
 use Xpressengine\Plugins\Page\PageEntity;
 use Xpressengine\Plugins\Page\PageHandler;
@@ -57,8 +55,7 @@ class PageManageController extends Controller
     public function edit($pageId)
     {
         $handler = $this->pageHandler;
-
-        $item = MenuItem::find($pageId);
+        $item = app('xe.menu')->getItem($pageId);
         $menuId = $item->menuId;
 
         $locales = app('config')->get('xe.lang.locales');
