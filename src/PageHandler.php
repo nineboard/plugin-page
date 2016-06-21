@@ -124,7 +124,7 @@ class PageHandler
      * @param string $mode   'pc' or 'mobile'
      * @param string $locale locale
      *
-     * @return PageEntity
+     * @return PageEntity|null
      */
     public function getPageEntity($pageId, $mode, $locale)
     {
@@ -140,13 +140,18 @@ class PageHandler
             $documentId = array_shift($documentIds);
         }
 
-        $content = $this->document->get($documentId, $pageId);
+        $model = $this->document->getModel($pageId);
+        $doc = $model->where('id', $documentId)->where('locale', $locale)->first();
+
+        if ($doc == null) {
+            return null;
+        }
 
         $pageEntity = new PageEntity(
             [
                 'pageId' => $pageId,
                 'uid' => $documentId,
-                'content' => $content,
+                'content' => $doc,
             ]
         );
 
