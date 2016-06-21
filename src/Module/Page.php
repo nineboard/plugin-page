@@ -115,15 +115,14 @@ class Page extends AbstractModule
     /**
      * Return Create Form View
      *
-     * @return mixed
+     * @return string
      */
     public function createMenuForm()
     {
         $config = XeConfig::get(self::getId());   // 기본 설정
-        $form = View::file(__DIR__ . '/../../views/menuType/menuCreate.blade.php', [
+        return View::file(__DIR__ . '/../../views/menuType/menuCreate.blade.php', [
             'config' => $config,
-        ]);
-        return $form;
+        ])->render();
     }
 
     /**

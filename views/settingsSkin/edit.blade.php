@@ -1,71 +1,74 @@
 @section('page_title')
-    <h2>폐이지 모듈 상세 설정</h2>
+    <h2>{{xe_trans('page::pageDetailConfigures')}}</h2>
 @stop
 
-<div class="panel-group" id="panel10">
-    <div class="panel">
-        <div class="panel-heading">
-            <div class="pull-left">
-                <h3 class="panel-title">
-                    <a data-toggle="collapse" data-target="#pcContent"
-                    href="#pcContent" >
-                    Set locale
-                </a>
-            </h3>
-        </div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel-group">
+            <div class="panel">
+                <div id="collapseOne" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <div class="clearfix">
+                                        <label>Select locale <small>Select locale for editing contents. </small></label>
+                                        <ul>
+                                            @foreach($locales as $locale)
+                                                <li>
+                                                    @if(Request::get('locale') == $locale) > @endif
 
-        <div id="pcContent" class="panel-collapse collapse in">
-            <div class="panel-body">
-                <dl>
-                    <dt>Select locale for editing contents.</dt>
-                    <dd>
-                        <ul>
-                            @foreach($locales as $locale)
-                            <li>
-                                @if(Request::get('locale') == $locale) > @endif
+                                                    <a href="{{ route('manage.plugin.page.edit', ['id' => $pageId, 'locale' => $locale]) }}" @if(Request::get('locale') == $locale) class="active" @endif >{{ $locale }}</a>
 
-                                <a href="{{ route('manage.plugin.page.edit', ['id' => $pageId, 'locale' => $locale]) }}" @if(Request::get('locale') == $locale) class="active" @endif >{{ $locale }}</a>
+                                                    @if(empty($config->get('pcUids')[$locale])) [PC emtpy] @endif
+                                                    @if(empty($config->get('mobileUids')[$locale])) [Mobile emtpy] @endif
 
-                                @if(empty($config->get('pcUids')[$locale])) [PC emtpy] @endif
-                                @if(empty($config->get('mobileUids')[$locale])) [Mobile emtpy] @endif
-
-                            </li>
-                            @endforeach
-                        </ul>
-                    </dd>
-                </dl>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="panel panel-default" id="panel1">
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <a data-toggle="collapse" data-target="#pcContent"
-                href="#pcContent" >
-                Page Pc Contents Setting
-            </a>
-        </h4>
+    <div class="col-sm-12">
+        <div class="panel-group">
+            <div class="panel">
+                <div class="panel-heading">
+                    <div class="pull-left">
+                        <h3 class="panel-title">Page Pc Contents Setting</h3>
+                    </div>
+                </div>
 
-    </div>
-    <form method="post" name="pcContent" action="{{ route('manage.plugin.page.update', $pcPage->pageId) }}" enctype="multi-form/data">
-        <input type="hidden" name="_method" value="put" />
-        <input type="hidden" name="mode" value="pc" />
-        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-        <input type="hidden" name="id" value="{{$pcPage->content->id}}" />
-        <input type="hidden" name="locale" value="{{$currentLocale}}" />
-
-        <div id="pcContent" class="panel-collapse collapse in">
-            <div class="panel-body">
-                <dl>
-                    <dt>Page Title</dt>
-                    <dd>
-                        <input type="text" name="pageTitle" class="form-control" value="{{ $pcPage->content->title }}"/></dd>
-                    </dl>
-                    <dl>
-                        <dt>내용</dt>
-                        <dd class="__xe_content">
-                            {!! uio('editor', [
+                <form method="post" name="pcContent" action="{{ route('manage.plugin.page.update', $pcPage->pageId) }}" enctype="multi-form/data">
+                <input type="hidden" name="_method" value="put" />
+                <input type="hidden" name="mode" value="pc" />
+                <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                <input type="hidden" name="id" value="{{$pcPage->content->id}}" />
+                <input type="hidden" name="locale" value="{{$currentLocale}}" />
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <div class="clearfix">
+                                    <label>Page title</label>
+                                </div>
+                                <input type="text" name="pageTitle" class="form-control" value="{{ $pcPage->content->title }}"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <div class="clearfix">
+                                    <label>{{xe_trans('xe::content')}}</label>
+                                </div>
+                                {!! uio('editor', [
                                 'contentDomId' => 'xePcContentEditor',
                                 'content' => $pcPage->content->content,
                                 'editorConfig' => [
@@ -80,50 +83,55 @@
                                 ],
                                 ]
                                 ]) !!}
-                            </dd>
-                        </dl>
-                        <dl>
-                            <dt>
-                                <button type="submit" class="btn btn-primary"> Save </button>
-                                <a class="btn btn-default" href="{{ URL::previous()  }}">Cancel</a>
-
-                                <button type="button" class="btn btn-primary __xe_btn_preview">미리보기</button>
-                            </dt>
-                        </dl>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </form>
-        </div>
 
-        <div class="panel panel-default" id="panel2">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-target="#mobileContent"
-                    href="#mobileContent" >
-                    Page Mobile Contents Setting
-                </a>
-            </h4>
-
+                <div class="panel-footer">
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-primary"><i class="xi-download"></i>{{xe_trans('xe::save')}}</button>
+                    </div>
+                </div>
+                </form>
+            </div>
         </div>
-        @if($config->get('mobile'))
-        <div id="mobileContent" class="panel-collapse collapse in">
-            <form method="post" name="mobileContent" action="{{ route('manage.plugin.page.update', $mobilePage->pageId) }}" enctype="multi-form/data">
-                <input type="hidden" name="_method" value="put" />
-                <input type="hidden" name="mode" value="mobile" />
-                <input type="hidden" name="m" value="1" />
-                <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                <input type="hidden" name="id" value="{{$mobilePage->content->id}}" />
-                <input type="hidden" name="locale" value="{{$currentLocale}}" />
-                <div class="panel-body">
-                    <dl>
-                        <dt>Page Title</dt>
-                        <dd>
-                            <input type="text" name="pageTitle" class="form-control" value="{{ $mobilePage->content->title }}"/></dd>
-                        </dl>
-                        <dl>
-                            <dt>내용</dt>
-                            <dd class="__xe_content">
-                                {!! uio('editor', [
+    </div>
+
+    <div class="col-sm-12">
+        <div class="panel-group">
+            <div class="panel">
+                <div class="panel-heading">
+                    <div class="pull-left">
+                        <h3 class="panel-title">Page Mobile Contents Setting</h3>
+                    </div>
+                </div>
+                @if($config->get('mobile'))
+                <form method="post" name="mobileContent" action="{{ route('manage.plugin.page.update', $mobilePage->pageId) }}" enctype="multi-form/data">
+                    <input type="hidden" name="_method" value="put" />
+                    <input type="hidden" name="mode" value="mobile" />
+                    <input type="hidden" name="m" value="1" />
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                    <input type="hidden" name="id" value="{{$mobilePage->content->id}}" />
+                    <input type="hidden" name="locale" value="{{$currentLocale}}" />
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <div class="clearfix">
+                                        <label>Page title</label>
+                                    </div>
+                                    <input type="text" name="pageTitle" class="form-control" value="{{ $mobilePage->content->title }}"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <div class="clearfix">
+                                        <label>{{xe_trans('xe::content')}}</label>
+                                    </div>
+                                    {!! uio('editor', [
                                     'contentDomId' => 'xeMobileContentEditor',
                                     'content' => $mobilePage->content->content,
                                     'editorConfig' => [
@@ -138,66 +146,64 @@
                                     ],
                                     ]
                                     ]) !!}
-                                </dd>
-                            </dl>
-                            <dl>
-                                <dt>
-                                    <button type="submit" class="btn btn-primary"> Save </button>
-                                    <a class="btn btn-default" href="{{ URL::previous()  }}">Cancel</a>
-
-                                    <button type="button" class="btn btn-primary __xe_btn_preview">미리보기</button>
-                                </dt>
-                            </dl>
+                                </div>
+                            </div>
                         </div>
-                    </form>
-                </div>
-                @else
-                <div id="mobileContent" class="panel-collapse collapse in">
-                    <div class="panel-body">
-                        모바일 컨텐츠 사용이 설정되어 있지 않습니다. <a href="{{route('settings.menu.edit.item', [$menuId, $pageId])}}">[설정 페이지로 이동]</a>
                     </div>
-                </div>
+
+                    <div class="panel-footer">
+                        <div class="pull-right">
+                            <button type="submit" class="btn btn-primary"><i class="xi-download"></i>{{xe_trans('xe::save')}}</button>
+                        </div>
+                    </div>
+                </form>
+                @else
+                    <div class="panel-body">
+                        {{xe_trans('page::msgMobileDeactivated')}} <a href="{{route('settings.menu.edit.item', [$menuId, $pageId])}}">[{{xe_trans('xe::goSettingPage')}}]</a>
+                    </div>
                 @endif
             </div>
+        </div>
+    </div>
 
-            <div class="panel panel-default" id="panel3">
+    <div class="col-sm-12">
+        <div class="panel-group">
+            <div class="panel">
                 <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-target="#commentSection"
-                        href="#commentSection" >
-                        Comment Setting
-                    </a>
-                </h4>
-
-            </div>
-            <div id="commentSection" class="panel-collapse collapse in">
-                <div class="panel-body">
-                    @if($config->get('comment'))
-                    댓글 설정페이지로 이동합니다 <a href="{{ app('xe.plugin.comment')->getInstanceSettingURI($pageId) }}">[설정 페이지로 이동]</a>
-                    @else
-                    코멘트 사용이 설정되어 있지 않습니다. <a href="{{route('settings.menu.edit.item', [$menuId, $pageId])}}">[설정 페이지로 이동]</a>
-                    @endif
+                    <div class="pull-left">
+                        <h3 class="panel-title">Comment Setting</h3>
+                    </div>
                 </div>
             </div>
+
+            <div class="panel-body">
+                @if($config->get('comment'))
+                    {{xe_trans('page::msgGoToCommentSettingPage')}} <a href="{{ app('xe.plugin.comment')->getInstanceSettingURI($pageId) }}">[{{xe_trans('xe::goSettingPage')}}]</a>
+                @else
+                    {{xe_trans('page::msgCommentDeactivated')}} <a href="{{route('settings.menu.edit.item', [$menuId, $pageId])}}">[{{xe_trans('xe::goSettingPage')}}]</a>
+                @endif
+            </div>
         </div>
+    </div>
+</div>
 
-        <script type="text/javascript">
+<script type="text/javascript">
 
-            $(function($) {
-                $('.__xe_btn_preview').on('click', function() {
-                    var form = $(this).closest('form');
+    $(function($) {
+        $('.__xe_btn_preview').on('click', function() {
+            var form = $(this).closest('form');
 
-                    var currentUrl = form.attr('action');
-                    var cuurentTarget = form.attr('target');
+            var currentUrl = form.attr('action');
+            var cuurentTarget = form.attr('target');
 
-                    form.attr('action', '{{instanceRoute('preview', [], $pageId) }}');
-                    form.attr('target', '_blank');
+            form.attr('action', '{{instanceRoute('preview', [], $pageId) }}');
+            form.attr('target', '_blank');
 
-                    form.submit();
+            form.submit();
 
-                    form.attr('action', currentUrl);
-                    form.attr('target', cuurentTarget === undefined ? '' : cuurentTarget);
-                });
-            });
+            form.attr('action', currentUrl);
+            form.attr('target', cuurentTarget === undefined ? '' : cuurentTarget);
+        });
+    });
 
-        </script>
+</script>
