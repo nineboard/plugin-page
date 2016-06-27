@@ -46,12 +46,6 @@
             }
         }
     },
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://packagist.xpressengine.io"
-        }
-    ],
     "autoload": {
         "psr-4": {
             "Xpressengine\\Plugins\\Page\\": "src/"
