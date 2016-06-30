@@ -251,6 +251,7 @@ class PageHandler
         $user = $this->auth->user();
         $doc->writer = $user->getDisplayName();
         $doc->user()->associate($user);
+        $doc->format = Document::FORMAT_HTML;
 
         XeDB::beginTransaction();
         try {

@@ -46,7 +46,6 @@
                 </div>
 
                 <form method="post" name="pcContent" action="{{ route('manage.plugin.page.update', $pcPage->pageId) }}" enctype="multi-form/data">
-                <input type="hidden" name="_method" value="put" />
                 <input type="hidden" name="mode" value="pc" />
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                 <input type="hidden" name="id" value="{{$pcPage->content->id}}" />
@@ -68,21 +67,7 @@
                                 <div class="clearfix">
                                     <label>{{xe_trans('xe::content')}}</label>
                                 </div>
-                                {!! uio('editor', [
-                                'contentDomId' => 'xePcContentEditor',
-                                'content' => $pcPage->content->content,
-                                'editorConfig' => [
-                                'fileUpload' => [
-                                'upload_url' => route('manage.plugin.page.upload', ['pageId' => $pageId]),
-                                'source_url' => instanceRoute('source', [], $pageId),
-                                'download_url' => instanceRoute('download', [], $pageId),
-                                ],
-                                'suggestion' => [
-                                'hashtag_api' => route('manage.plugin.page.hashTag', ['pageId' => $pageId]),
-                                'mention_api' => route('manage.plugin.page.mention', ['pageId' => $pageId]),
-                                ],
-                                ]
-                                ]) !!}
+                                {!! editor($pageId, ['contentDomId' => 'xePcContentEditor', 'content' => $pcPage->content->content], $pcPage->content->id) !!}
                             </div>
                         </div>
                     </div>
@@ -108,7 +93,6 @@
                 </div>
                 @if($config->get('mobile'))
                 <form method="post" name="mobileContent" action="{{ route('manage.plugin.page.update', $mobilePage->pageId) }}" enctype="multi-form/data">
-                    <input type="hidden" name="_method" value="put" />
                     <input type="hidden" name="mode" value="mobile" />
                     <input type="hidden" name="m" value="1" />
                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
@@ -131,21 +115,7 @@
                                     <div class="clearfix">
                                         <label>{{xe_trans('xe::content')}}</label>
                                     </div>
-                                    {!! uio('editor', [
-                                    'contentDomId' => 'xeMobileContentEditor',
-                                    'content' => $mobilePage->content->content,
-                                    'editorConfig' => [
-                                    'fileUpload' => [
-                                    'upload_url' => route('manage.plugin.page.upload', ['pageId' => $pageId]),
-                                    'source_url' => instanceRoute('source', [], $pageId),
-                                    'download_url' => instanceRoute('download', [], $pageId),
-                                    ],
-                                    'suggestion' => [
-                                    'hashtag_api' => route('manage.plugin.page.hashTag', ['pageId' => $pageId]),
-                                    'mention_api' => route('manage.plugin.page.mention', ['pageId' => $pageId]),
-                                    ],
-                                    ]
-                                    ]) !!}
+                                    {!! editor($pageId, ['contentDomId' => 'xeMobileContentEditor', 'content' => $mobilePage->content->content], $mobilePage->content->id) !!}
                                 </div>
                             </div>
                         </div>
@@ -174,14 +144,13 @@
                         <h3 class="panel-title">Comment Setting</h3>
                     </div>
                 </div>
-            </div>
-
-            <div class="panel-body">
-                @if($config->get('comment'))
-                    {{xe_trans('page::msgGoToCommentSettingPage')}} <a href="{{ app('xe.plugin.comment')->getInstanceSettingURI($pageId) }}">[{{xe_trans('xe::goSettingPage')}}]</a>
-                @else
-                    {{xe_trans('page::msgCommentDeactivated')}} <a href="{{route('settings.menu.edit.item', [$menuId, $pageId])}}">[{{xe_trans('xe::goSettingPage')}}]</a>
-                @endif
+                <div class="panel-body">
+                    @if($config->get('comment'))
+                        {{xe_trans('page::msgGoToCommentSettingPage')}} <a href="{{ app('xe.plugin.comment')->getInstanceSettingURI($pageId) }}">[{{xe_trans('xe::goSettingPage')}}]</a>
+                    @else
+                        {{xe_trans('page::msgCommentDeactivated')}} <a href="{{route('settings.menu.edit.item', [$menuId, $pageId])}}">[{{xe_trans('xe::goSettingPage')}}]</a>
+                    @endif
+                </div>
             </div>
         </div>
     </div>

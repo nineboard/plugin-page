@@ -50,5 +50,8 @@
         "psr-4": {
             "Xpressengine\\Plugins\\Page\\": "src/"
         }
+    },
+    "require": {
+        "xpressengine-plugin/ckeditor": "*"
     }
 }

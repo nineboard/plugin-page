@@ -14,6 +14,7 @@
 namespace Xpressengine\Plugins\Page\Module;
 
 use XeConfig;
+use XeEditor;
 use Xpressengine\Plugins\Page\PageHandler;
 use View;
 use Xpressengine\Module\AbstractModule;
@@ -72,25 +73,10 @@ class Page extends AbstractModule
     {
         Route::settings(self::getId(), function () {
             Route::get('edit/{pageId}', ['as' => 'manage.plugin.page.edit', 'uses' => 'PageManageController@edit']);
-            Route::put(
+            Route::post(
                 'update/{pageId}',
                 ['as' => 'manage.plugin.page.update', 'uses' => 'PageManageController@update']
             );
-            Route::post(
-                'file/{pageId}/upload',
-                [
-                    'as' => 'manage.plugin.page.upload',
-                    'uses' => 'PageManageController@fileUpload'
-                ]
-            );
-            Route::get('suggestion/{pageId}/hashTag/{id?}', [
-                'as' => 'manage.plugin.page.hashTag',
-                'uses' => 'PageManageController@suggestionHashTag'
-            ]);
-            Route::get('suggestion/{pageId}/mention/{id?}', [
-                'as' => 'manage.plugin.page.mention',
-                'uses' => 'PageManageController@suggestionMention'
-            ]);
         }, ['namespace' => 'Xpressengine\Plugins\Page\Controller']);
     }
 
@@ -104,11 +90,7 @@ class Page extends AbstractModule
     {
         Route::instance(self::getId(), function () {
             Route::get('/', ['as' => 'index', 'uses' => 'PageUserController@index']);
-            Route::put('/preview', ['as' => 'preview', 'uses' => 'PageUserController@preview']);
-
-            Route::get('/file/source/{id}', ['as' => 'source', 'uses' => 'PageUserController@fileSource']);
-            Route::get('/file/download/{id}', ['as' => 'download', 'uses' => 'PageUserController@fileDownload']);
-
+            Route::post('/preview', ['as' => 'preview', 'uses' => 'PageUserController@preview']);
         }, ['namespace' => 'Xpressengine\Plugins\Page\Controller']);
     }
 
@@ -139,6 +121,8 @@ class Page extends AbstractModule
     public function storeMenu($instanceId, $menuTypeParams, $itemParams)
     {
         $this->getPageHandler()->createPageInstance($instanceId, $menuTypeParams, app('xe.translator')->getLocale());
+
+        XeEditor::setInstance($instanceId, 'editor/ckeditor@ckEditor');
     }
 
     /**
