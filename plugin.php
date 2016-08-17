@@ -33,7 +33,7 @@ class PagePlugin extends AbstractPlugin
      */
     public function install()
     {
-//        XeLang::putFromLangDataSource(self::getId(), __DIR__.'/lang/lang.php');
+        // XeLang::putFromLangDataSource(self::getId(), __DIR__.'/lang/lang.php');
     }
 
     /**
@@ -62,8 +62,6 @@ class PagePlugin extends AbstractPlugin
      */
     public function checkInstalled($installedVersion = NULL)
     {
-        // TODO: Implement checkInstall() method.
-
         return true;
     }
 
@@ -72,7 +70,7 @@ class PagePlugin extends AbstractPlugin
      */
     public function checkUpdated($installedVersion = NULL)
     {
-        // TODO: Implement checkUpdate() method.
+        return true;
     }
 
     /**
