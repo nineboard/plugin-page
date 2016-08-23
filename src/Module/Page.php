@@ -17,7 +17,7 @@ use XeConfig;
 use XeEditor;
 use Xpressengine\Plugins\Page\PageHandler;
 use View;
-use Xpressengine\Module\AbstractModule;
+use Xpressengine\Menu\AbstractModule;
 use Route;
 use App;
 
