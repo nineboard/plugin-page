@@ -140,7 +140,7 @@ class PageHandler
             $documentId = array_shift($documentIds);
         }
 
-        $model = $this->document->getModel($pageId);
+        $model = Document::division($pageId);
         $doc = $model->where('id', $documentId)->where('locale', $locale)->first();
 
         if ($doc == null) {
