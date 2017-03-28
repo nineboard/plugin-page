@@ -7,5 +7,7 @@
 @endif
 
 @if ($config->get('comment') === true)
-{!! uio('comment', ['target' => $page]) !!}
+    <div class="__xe_comment board_comment">
+        {!! uio('comment', ['target' => $page]) !!}
+    </div>
 @endif
