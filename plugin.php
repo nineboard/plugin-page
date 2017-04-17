@@ -33,7 +33,7 @@ class PagePlugin extends AbstractPlugin
      */
     public function install()
     {
-        // XeLang::putFromLangDataSource(self::getId(), __DIR__.'/lang/lang.php');
+        XeLang::putFromLangDataSource(self::getId(), __DIR__.'/lang/lang.php');
     }
 
     /**
