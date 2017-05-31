@@ -18,6 +18,7 @@ use Request;
 use Redirect;
 use XePresenter;
 use XeEditor;
+use XeMenu;
 use XeStorage;
 use XeTag;
 use App;
@@ -58,7 +59,7 @@ class PageManageController extends Controller
     public function edit($pageId)
     {
         $handler = $this->pageHandler;
-        $item = app('xe.menu')->getItem($pageId);
+        $item = XeMenu::items()->find($pageId);
         $menuId = $item->menuId;
 
         $locales = app('config')->get('xe.lang.locales');
