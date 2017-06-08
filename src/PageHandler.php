@@ -18,7 +18,6 @@ use Xpressengine\Config\ConfigEntity;
 use Xpressengine\Config\ConfigManager;
 use Xpressengine\Document\DocumentHandler;
 use Xpressengine\Document\Models\Document;
-use Xpressengine\Plugins\Comment\Module as CommentModule;
 use Xpressengine\Plugins\Comment\Handler as CommentHandler;
 use Xpressengine\Plugins\Page\Module\Page as PageModule;
 use Xpressengine\User\GuardInterface;
@@ -46,6 +45,7 @@ class PageHandler
      * @var \Xpressengine\Config\ConfigManager
      */
     protected $configManager;
+
     /**
      * @var GuardInterface
      */
