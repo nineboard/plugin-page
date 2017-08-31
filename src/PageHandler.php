@@ -243,7 +243,7 @@ class PageHandler
     public function createPageDocument($pageId, $pageTitle, $locale)
     {
         $doc = new Document();
-        $doc->instanceId = $pageId;
+        $doc->instance_id = $pageId;
         $doc->type = PageModule::getId();
         $doc->title = $pageTitle;
         $doc->locale = $locale;
