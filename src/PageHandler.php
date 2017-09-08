@@ -242,20 +242,23 @@ class PageHandler
      */
     public function createPageDocument($pageId, $pageTitle, $locale)
     {
-        $doc = new Document();
-        $doc->instance_id = $pageId;
-        $doc->type = PageModule::getId();
-        $doc->title = $pageTitle;
-        $doc->locale = $locale;
         /** @var UserInterface $user */
         $user = $this->auth->user();
-        $doc->writer = $user->getDisplayName();
-        $doc->user()->associate($user);
-        $doc->format = Document::FORMAT_HTML;
+        $data = [
+            'instance_id' => $pageId,
+            'type' => PageModule::getId(),
+            'title' => $pageTitle,
+            'local' => $locale,
+            'user_id' => $user->getId(),
+            'writer' => $user->getDisplayName(),
+            'certify_key' => '',
+            'format' => Document::FORMAT_HTML,
+            'content' => '',
+        ];
 
         XeDB::beginTransaction();
         try {
-            $this->document->put($doc);
+            $doc = $this->document->add($data);
         } catch (\Exception $e) {
             XeDB::rollback();
             throw $e;
