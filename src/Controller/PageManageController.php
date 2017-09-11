@@ -60,7 +60,7 @@ class PageManageController extends Controller
     {
         $handler = $this->pageHandler;
         $item = XeMenu::items()->find($pageId);
-        $menuId = $item->menuId;
+        $menuId = $item->menu_id;
 
         $locales = app('config')->get('xe.lang.locales');
         $siteLocale = $locales[0];
