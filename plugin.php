@@ -99,7 +99,7 @@ class PagePlugin extends AbstractPlugin
                     $app['xe.document'],
                     $app['xe.plugin.comment']->getHandler(),
                     $app['xe.config'],
-                    $app['xe.auth']
+                    $app['auth']->guard()
                 );
             }
         );
