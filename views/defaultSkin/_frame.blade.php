@@ -1,3 +1,5 @@
 <div class="page-container">
-    @yield('content', isset($content) ? $content : '')
+    @section('content')
+        {!! isset($content) ? $content : '' !!}
+    @show
 </div>
