@@ -165,7 +165,7 @@
             var currentUrl = form.attr('action');
             var cuurentTarget = form.attr('target');
 
-            form.attr('action', '{{instanceRoute('preview', [], $pageId) }}');
+            form.attr('action', '{{instance_route('preview', [], $pageId) }}');
             form.attr('target', '_blank');
 
             form.submit();
