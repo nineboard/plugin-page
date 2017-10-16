@@ -248,7 +248,7 @@ class PageHandler
             'instance_id' => $pageId,
             'type' => PageModule::getId(),
             'title' => $pageTitle,
-            'local' => $locale,
+            'locale' => $locale,
             'user_id' => $user->getId(),
             'writer' => $user->getDisplayName(),
             'certify_key' => '',

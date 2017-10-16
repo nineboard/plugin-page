@@ -67,7 +67,6 @@ class PageManageController extends Controller
         $currentLocale = Request::get('locale', $siteLocale);
 
         $config = $handler->getPageConfig($pageId);
-
         if ($handler->hasLocale($config->get('pcUids'), $currentLocale) === false) {
             // create page entity
             $pcPage = new PageEntity([
