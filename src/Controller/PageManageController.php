@@ -89,6 +89,8 @@ class PageManageController extends Controller
             $mobilePage = $handler->getPageEntity($pageId, 'mobile', $currentLocale);
         }
 
+
+        XePresenter::widgetParsing(false);
         return XePresenter::make('edit', [
             'pcPage' => $pcPage,
             'mobilePage' => $mobilePage,
