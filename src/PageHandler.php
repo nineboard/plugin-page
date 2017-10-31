@@ -429,6 +429,7 @@ class PageHandler
         $documentConfig = new ConfigEntity;
         $documentConfig->set('instanceId', $pageId);
         $documentConfig->set('instanceName', $pageTitle);
+        $documentConfig->set('revision', true);
 
         $this->document->getInstanceManager()->add($documentConfig);
     }
