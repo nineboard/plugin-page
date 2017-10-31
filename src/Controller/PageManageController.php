@@ -14,6 +14,7 @@
 namespace Xpressengine\Plugins\Page\Controller;
 
 use App\Http\Controllers\Controller;
+use App\Http\Sections\EditorSection;
 use Request;
 use Redirect;
 use XePresenter;
@@ -143,5 +144,19 @@ class PageManageController extends Controller
         XeTag::set($documentId, array_get($inputs, $editor->getTagInputName(), []), $pageId);
 
         return Redirect::back();
+    }
+
+    public function editEditor($pageId)
+    {
+        $handler = $this->pageHandler;
+        $config = $handler->getPageConfig($pageId);
+
+        $editorSection = new EditorSection($pageId);
+
+        return XePresenter::make('editor', [
+            'config' => $config,
+            'pageId' => $pageId,
+            'editorSection' => $editorSection,
+        ]);
     }
 }
