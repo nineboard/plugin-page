@@ -77,6 +77,7 @@ class Page extends AbstractModule
                 'update/{pageId}',
                 ['as' => 'manage.plugin.page.update', 'uses' => 'PageManageController@update']
             );
+            Route::get('editor/edit/{pageId}', ['as' => 'manage.plugin.page.editor', 'uses' => 'PageManageController@editEditor']);
         }, ['namespace' => 'Xpressengine\Plugins\Page\Controller']);
     }
 

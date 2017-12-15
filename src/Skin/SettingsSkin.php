@@ -38,6 +38,8 @@ class SettingsSkin extends AbstractSkin
      */
     public function render()
     {
+        $this->data['_active'] = $this->view;
+
         $view = View::file($this->getViewFilePath($this->frame), $this->data);
         $view->content = View::file($this->getViewFilePath($this->view), $this->data)->render();
 
