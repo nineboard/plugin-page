@@ -18,6 +18,7 @@ use Request;
 use Redirect;
 use XePresenter;
 use XeEditor;
+use XeLang;
 use XeMenu;
 use XeStorage;
 use XeTag;
@@ -62,7 +63,7 @@ class PageManageController extends Controller
         $item = XeMenu::items()->find($pageId);
         $menuId = $item->menu_id;
 
-        $locales = app('config')->get('xe.lang.locales');
+        $locales = XeLang::getLocales();
         $siteLocale = $locales[0];
         $currentLocale = Request::get('locale', $siteLocale);
 

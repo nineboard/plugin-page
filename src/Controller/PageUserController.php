@@ -65,7 +65,7 @@ class PageUserController extends Controller
 
         $page = $pageHandler->getPageEntity($pageId, $mode, XeLang::getLocale());
         if ($page === null) {
-            $locales = app('config')->get('xe.lang.locales');
+            $locales = XeLang::getLocales();
             foreach ($locales as $locale) {
                 $page = $pageHandler->getPageEntity($pageId, $mode, $locale);
                 if ($page !== null) {
