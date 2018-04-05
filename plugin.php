@@ -13,10 +13,11 @@
 
 namespace Xpressengine\Plugins\Page;
 
+use Route;
 use XeConfig;
 use Xpressengine\Plugin\AbstractPlugin;
-use App;
 use XeLang;
+use Xpressengine\Plugins\Page\Module\Page;
 
 /**
  * Page plugin
@@ -24,7 +25,7 @@ use XeLang;
  * @category    Page
  * @package     Page
  */
-class PagePlugin extends AbstractPlugin
+class Plugin extends AbstractPlugin
 {
     /**
      * install
@@ -32,6 +33,16 @@ class PagePlugin extends AbstractPlugin
      * @return void
      */
     public function install()
+    {
+        $this->importLang();
+    }
+
+    public function update()
+    {
+        $this->importLang();
+    }
+
+    private function importLang()
     {
         XeLang::putFromLangDataSource(self::getId(), __DIR__.'/langs/lang.php');
     }
@@ -50,63 +61,51 @@ class PagePlugin extends AbstractPlugin
     }
 
     /**
-     * @return boolean
-     */
-    public function unInstall()
-    {
-        // TODO: Implement unInstall() method.
-    }
-
-    /**
-     * @return boolean
-     */
-    public function checkInstalled($installedVersion = NULL)
-    {
-        return true;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function checkUpdated($installedVersion = NULL)
-    {
-        return true;
-    }
-
-    /**
      * boot
      *
      * @return void
      */
     public function boot()
     {
-        $this->bindClasses();
+        $this->routes();
     }
 
     /**
-     * bindClasses
+     * register
      *
      * @return void
      */
-    protected function bindClasses()
+    public function register()
     {
         $app = app();
 
-        $app->singleton(
-            'xe.page.handler',
-            function ($app) {
-                return new PageHandler(
-                    $app['xe.document'],
-                    $app['xe.plugin.comment']->getHandler(),
-                    $app['xe.config'],
-                    $app['auth']->guard()
-                );
-            }
-        );
+        $app->singleton(PageHandler::class, function ($app) {
+            return new PageHandler(
+                $app['xe.document'],
+                $app['xe.plugin.comment']->getHandler(),
+                $app['xe.config'],
+                $app['auth']->guard()
+            );
+        });
 
-        $app->bind(
-            'Xpressengine\Plugins\Page\PageHandler',
-            'xe.page.handler'
-        );
+        $app->alias(PageHandler::class, 'xe.page.handler');
+    }
+
+    private function routes()
+    {
+        Route::settings(Page::getId(), function () {
+            Route::get('edit/{pageId}', ['as' => 'manage.plugin.page.edit', 'uses' => 'PageManageController@edit']);
+            Route::post(
+                'update/{pageId}',
+                ['as' => 'manage.plugin.page.update', 'uses' => 'PageManageController@update']
+            );
+            Route::get('editor/edit/{pageId}', ['as' => 'manage.plugin.page.editor', 'uses' => 'PageManageController@editEditor']);
+            Route::get('skin/edit/{pageId}', ['as' => 'manage.plugin.page.skin', 'uses' => 'PageManageController@editSkin']);
+        }, ['namespace' => 'Xpressengine\Plugins\Page\Controller']);
+
+        Route::instance(Page::getId(), function () {
+            Route::get('/', ['as' => 'index', 'uses' => 'PageUserController@index']);
+            Route::post('/preview', ['as' => 'preview', 'uses' => 'PageUserController@preview']);
+        }, ['namespace' => 'Xpressengine\Plugins\Page\Controller']);
     }
 }

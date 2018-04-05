@@ -33,17 +33,6 @@ class Page extends AbstractModule
     const THUMBNAIL_TYPE = 'spill';
 
     /**
-     * boot
-     *
-     * @return void
-     */
-    public static function boot()
-    {
-        self::registerManageRoute();
-        self::registerInstanceRoute();
-    }
-
-    /**
      * getSettingsURI
      *
      * @return null
@@ -61,38 +50,6 @@ class Page extends AbstractModule
     public static function isRouteAble()
     {
         return true;
-    }
-
-    /**
-     * Register Plugin Manage Route
-     *
-     *
-     * @return void
-     */
-    protected static function registerManageRoute()
-    {
-        Route::settings(self::getId(), function () {
-            Route::get('edit/{pageId}', ['as' => 'manage.plugin.page.edit', 'uses' => 'PageManageController@edit']);
-            Route::post(
-                'update/{pageId}',
-                ['as' => 'manage.plugin.page.update', 'uses' => 'PageManageController@update']
-            );
-            Route::get('editor/edit/{pageId}', ['as' => 'manage.plugin.page.editor', 'uses' => 'PageManageController@editEditor']);
-        }, ['namespace' => 'Xpressengine\Plugins\Page\Controller']);
-    }
-
-    /**
-     * Register Plugin Instance Route
-     *
-     *
-     * @return void
-     */
-    protected static function registerInstanceRoute()
-    {
-        Route::instance(self::getId(), function () {
-            Route::get('/', ['as' => 'index', 'uses' => 'PageUserController@index']);
-            Route::post('/preview', ['as' => 'preview', 'uses' => 'PageUserController@preview']);
-        }, ['namespace' => 'Xpressengine\Plugins\Page\Controller']);
     }
 
     /**
