@@ -15,6 +15,7 @@ namespace Xpressengine\Plugins\Page\Controller;
 
 use App\Http\Controllers\Controller;
 use App\Http\Sections\EditorSection;
+use App\Http\Sections\SkinSection;
 use Request;
 use Redirect;
 use XePresenter;
@@ -26,6 +27,7 @@ use XeTag;
 use App;
 use Xpressengine\Document\Models\Document;
 use Xpressengine\Plugins\Page\Module\Page as PageModule;
+use Xpressengine\Plugins\Page\Module\Page;
 use Xpressengine\Plugins\Page\PageEntity;
 use Xpressengine\Plugins\Page\PageHandler;
 
@@ -158,6 +160,16 @@ class PageManageController extends Controller
             'config' => $config,
             'pageId' => $pageId,
             'editorSection' => $editorSection,
+        ]);
+    }
+
+    public function editSkin($pageId)
+    {
+        $skinSection = new SkinSection(Page::getId(), $pageId);
+
+        return XePresenter::make('skin', [
+            'pageId' => $pageId,
+            'skinSection' => $skinSection,
         ]);
     }
 }

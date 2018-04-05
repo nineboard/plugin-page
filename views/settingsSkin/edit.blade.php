@@ -1,6 +1,3 @@
-@section('page_title')
-    <h2>{{xe_trans('page::pageDetailConfigures')}}</h2>
-@stop
 
 <div class="row">
     <div class="col-sm-12">

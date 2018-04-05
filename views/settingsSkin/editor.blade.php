@@ -1,8 +1,3 @@
-@section('page_title')
-    <h2>{{xe_trans('board::boardDetailConfigures')}}</h2>
-    @endsection
-
-    @section('page_description')@endsection
 
             <!-- Main content -->
     <div class="row">

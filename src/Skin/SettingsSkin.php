@@ -13,6 +13,7 @@
 
 namespace Xpressengine\Plugins\Page\Skin;
 
+use XeMenu;
 use Xpressengine\Skin\AbstractSkin;
 use View;
 
@@ -40,8 +41,10 @@ class SettingsSkin extends AbstractSkin
     {
         $this->data['_active'] = $this->view;
 
-        $view = View::file($this->getViewFilePath($this->frame), $this->data);
-        $view->content = View::file($this->getViewFilePath($this->view), $this->data)->render();
+        $menuItem = XeMenu::items()->find($this->data['pageId']);
+
+        $view = View::file($this->getViewFilePath($this->frame), $this->data, compact('menuItem'));
+        $view->content = View::file($this->getViewFilePath($this->view), $this->data);
 
         return $view;
     }
