@@ -153,23 +153,21 @@
     </div>
 </div>
 
-<script type="text/javascript">
+<script>
+window.jQuery(function($) {
+    $('.__xe_btn_preview').on('click', function() {
+        var form = $(this).closest('form');
 
-    $(function($) {
-        $('.__xe_btn_preview').on('click', function() {
-            var form = $(this).closest('form');
+        var currentUrl = form.attr('action');
+        var cuurentTarget = form.attr('target');
 
-            var currentUrl = form.attr('action');
-            var cuurentTarget = form.attr('target');
+        form.attr('action', '{{instance_route('preview', [], $pageId) }}');
+        form.attr('target', '_blank');
 
-            form.attr('action', '{{instance_route('preview', [], $pageId) }}');
-            form.attr('target', '_blank');
+        form.submit();
 
-            form.submit();
-
-            form.attr('action', currentUrl);
-            form.attr('target', cuurentTarget === undefined ? '' : cuurentTarget);
-        });
+        form.attr('action', currentUrl);
+        form.attr('target', cuurentTarget === undefined ? '' : cuurentTarget);
     });
-
+});
 </script>
