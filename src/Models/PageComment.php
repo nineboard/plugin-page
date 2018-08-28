@@ -1,6 +1,6 @@
 <?php
 /**
- * Page Entity
+ * PageComment
  *
  * PHP version 7
  *
@@ -11,18 +11,17 @@
  * @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html LGPL-2.1
  * @link        https://xpressengine.io
  */
-
-namespace Xpressengine\Plugins\Page;
+namespace Xpressengine\Plugins\Page\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Xpressengine\Plugins\Comment\CommentUsable;
 use Xpressengine\Plugins\Page\Migrations\PageCommentTargetMigration;
-use Xpressengine\Plugins\Page\Models\PageModel;
+use Xpressengine\Plugins\Page\PageHandler;
 use Xpressengine\Routing\InstanceRoute;
 use Xpressengine\User\UserInterface;
 
 /**
- * Page Entity
+ * PageComment
  *
  * @category    Page
  * @package     Xpressengine\Plugins\Page
@@ -31,7 +30,7 @@ use Xpressengine\User\UserInterface;
  * @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html LGPL-2.1
  * @link        https://xpressengine.io
  */
-class PageEntity extends Model implements CommentUsable
+class PageComment extends Model implements CommentUsable
 {
     const MODE_PC = 'pc';
     const MODE_MOBILE = 'mobile';

@@ -2,12 +2,13 @@
 /**
  * Page User Controller
  *
+ * PHP version 7
+ *
  * @category    Page
  * @package     Xpressengine\Plugins\Page\Controller
  * @author      XE Developers <developers@xpressengine.com>
  * @copyright   2015 Copyright (C) NAVER Corp. <http://www.navercorp.com>
- * @license     LGPL-2.1
- * @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html LGPL-2.1
  * @link        https://xpressengine.io
  */
 
@@ -63,22 +64,24 @@ class PageUserController extends Controller
             $mode = 'mobile';
         }
 
-        $page = $pageHandler->getPageEntity($pageId, $mode, XeLang::getLocale());
+        $page = $pageHandler->getPageModel($pageId, $mode, XeLang::getLocale());
         if ($page === null) {
             $locales = XeLang::getLocales();
             foreach ($locales as $locale) {
-                $page = $pageHandler->getPageEntity($pageId, $mode, $locale);
+                $page = $pageHandler->getPageModel($pageId, $mode, $locale);
                 if ($page !== null) {
                     break;
                 }
             }
         }
 
+        $pageCommentTarget = $pageHandler->getPageCommentTarget($pageId);
+
         return XePresenter::make('show', [
             'pageId' => $pageId,
-            'page' => $page,
-            'title' => $page->content->title,
-            'content' => $page->content->content,
+            'page' => $pageCommentTarget,
+            'title' => $page->title,
+            'content' => $page->content,
             'config' => $config
         ]);
     }

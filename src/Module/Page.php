@@ -196,6 +196,6 @@ class Page extends AbstractModule
             $mode = 'mobile';
         }
 
-        return $this->getPageHandler()->getPageEntity($pageId, $mode, \XeLang::getLocale());
+        return $this->getPageHandler()->getPageModel($pageId, $mode, \XeLang::getLocale());
     }
 }

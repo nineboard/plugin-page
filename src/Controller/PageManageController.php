@@ -25,10 +25,9 @@ use XeMenu;
 use XeStorage;
 use XeTag;
 use App;
-use Xpressengine\Document\Models\Document;
+use Xpressengine\Plugins\Page\Models\PageComment;
 use Xpressengine\Plugins\Page\Module\Page as PageModule;
 use Xpressengine\Plugins\Page\Module\Page;
-use Xpressengine\Plugins\Page\PageEntity;
 use Xpressengine\Plugins\Page\PageHandler;
 
 /**
@@ -56,7 +55,7 @@ class PageManageController extends Controller
     /**
      * edit
      *
-     * @param string              $pageId page instance id
+     * @param string $pageId page instance id
      *
      * @return \Xpressengine\Presenter\RendererInterface
      */
@@ -69,30 +68,28 @@ class PageManageController extends Controller
         $locales = XeLang::getLocales();
         $siteLocale = $locales[0];
         $currentLocale = Request::get('locale', $siteLocale);
+        $targetId = $handler->getPageCommentTargetId($pageId);
 
         $config = $handler->getPageConfig($pageId);
         if ($handler->hasLocale($config->get('pcUids'), $currentLocale) === false) {
-            // create page entity
-            $pcPage = new PageEntity([
-                'pageId' => $pageId,
-                'uid' => null,
-                'content' => new Document,
-            ]);
+            $pcDocumentId = $handler->createNewLocalePageContent($pageId, '', $currentLocale, PageComment::MODE_PC);
+
+            $handler->createPageCommentTarget($targetId, $pageId, $pcDocumentId, PageComment::MODE_PC, $currentLocale);
+
+            $pcPage = $handler->getPageModel($pageId, PageComment::MODE_PC, $currentLocale);
         } else {
-            $pcPage = $handler->getPageEntity($pageId, 'pc', $currentLocale);
+            $pcPage = $handler->getPageModel($pageId, PageComment::MODE_PC, $currentLocale);
         }
 
         if ($handler->hasLocale($config->get('mobileUids'), $currentLocale) === false) {
-            // create page entity
-            $mobilePage = new PageEntity([
-                'pageId' => $pageId,
-                'uid' => null,
-                'content' => new Document,
-            ]);
-        } else {
-            $mobilePage = $handler->getPageEntity($pageId, 'mobile', $currentLocale);
-        }
+            $mobileDocumentId = $handler->createNewLocalePageContent($pageId, '', $currentLocale, PageComment::MODE_MOBILE);
 
+            $handler->createPageCommentTarget($targetId, $pageId, $mobileDocumentId, PageComment::MODE_MOBILE, $currentLocale);
+
+            $mobilePage = $handler->getPageModel($pageId, PageComment::MODE_MOBILE, $currentLocale);
+        } else {
+            $mobilePage = $handler->getPageModel($pageId, PageComment::MODE_MOBILE, $currentLocale);
+        }
 
         XePresenter::widgetParsing(false);
         return XePresenter::make('edit', [

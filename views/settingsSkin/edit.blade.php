@@ -42,10 +42,10 @@
                     </div>
                 </div>
 
-                <form method="post" name="pcContent" action="{{ route('manage.plugin.page.update', $pcPage->pageId) }}" enctype="multi-form/data">
+                <form method="post" name="pcContent" action="{{ route('manage.plugin.page.update', $pcPage->getInstanceId()) }}" enctype="multi-form/data">
                 <input type="hidden" name="mode" value="pc" />
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                <input type="hidden" name="id" value="{{$pcPage->content->id}}" />
+                <input type="hidden" name="id" value="{{$pcPage->id}}" />
                 <input type="hidden" name="locale" value="{{$currentLocale}}" />
                 <div class="panel-body">
                     <div class="row">
@@ -54,7 +54,7 @@
                                 <div class="clearfix">
                                     <label>Page title</label>
                                 </div>
-                                <input type="text" name="pageTitle" class="form-control" value="{{ $pcPage->content->title }}"/>
+                                <input type="text" name="pageTitle" class="form-control" value="{{ $pcPage->title }}"/>
                             </div>
                         </div>
                     </div>
@@ -64,7 +64,7 @@
                                 <div class="clearfix">
                                     <label>{{xe_trans('xe::content')}}</label>
                                 </div>
-                                {!! editor($pageId, ['contentDomId' => 'xePcContentEditor', 'content' => $pcPage->content->content], $pcPage->content->id) !!}
+                                {!! editor($pageId, ['contentDomId' => 'xePcContentEditor', 'content' => $pcPage->content], $pcPage->id) !!}
                             </div>
                         </div>
                     </div>
@@ -89,11 +89,11 @@
                     </div>
                 </div>
                 @if($config->get('mobile'))
-                <form method="post" name="mobileContent" action="{{ route('manage.plugin.page.update', $mobilePage->pageId) }}" enctype="multi-form/data">
+                <form method="post" name="mobileContent" action="{{ route('manage.plugin.page.update', $mobilePage->getInstanceId()) }}" enctype="multi-form/data">
                     <input type="hidden" name="mode" value="mobile" />
                     <input type="hidden" name="m" value="1" />
                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                    <input type="hidden" name="id" value="{{$mobilePage->content->id}}" />
+                    <input type="hidden" name="id" value="{{$mobilePage->id}}" />
                     <input type="hidden" name="locale" value="{{$currentLocale}}" />
                     <div class="panel-body">
                         <div class="row">
@@ -102,7 +102,7 @@
                                     <div class="clearfix">
                                         <label>Page title</label>
                                     </div>
-                                    <input type="text" name="pageTitle" class="form-control" value="{{ $mobilePage->content->title }}"/>
+                                    <input type="text" name="pageTitle" class="form-control" value="{{ $mobilePage->title }}"/>
                                 </div>
                             </div>
                         </div>
@@ -112,7 +112,7 @@
                                     <div class="clearfix">
                                         <label>{{xe_trans('xe::content')}}</label>
                                     </div>
-                                    {!! editor($pageId, ['contentDomId' => 'xeMobileContentEditor', 'content' => $mobilePage->content->content], $mobilePage->content->id) !!}
+                                    {!! editor($pageId, ['contentDomId' => 'xeMobileContentEditor', 'content' => $mobilePage->content], $mobilePage->id) !!}
                                 </div>
                             </div>
                         </div>

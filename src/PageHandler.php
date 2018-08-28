@@ -19,6 +19,8 @@ use Xpressengine\Config\ConfigManager;
 use Xpressengine\Document\DocumentHandler;
 use Xpressengine\Document\Models\Document;
 use Xpressengine\Plugins\Comment\Handler as CommentHandler;
+use Xpressengine\Plugins\Page\Models\PageComment;
+use Xpressengine\Plugins\Page\Models\PageModel;
 use Xpressengine\Plugins\Page\Module\Page as PageModule;
 use Xpressengine\User\GuardInterface;
 use Xpressengine\User\UserInterface;
@@ -118,6 +120,39 @@ class PageHandler
     }
 
     /**
+     * @param string $pageId page instance id
+     *
+     * @return PageComment
+     */
+    public function getPageCommentTarget($pageId)
+    {
+        $pageCommentTarget = PageComment::where('page_instance_id', $pageId)->first();
+
+        return $pageCommentTarget;
+    }
+
+    /**
+     * create or get pageCommentTargetId
+     *
+     * @param  string $pageId page_instance_id
+     *
+     * @return string|null
+     */
+    public function getPageCommentTargetId($pageId)
+    {
+        $pageCommentTarget = $this->getPageCommentTarget($pageId);
+
+        $targetId = null;
+        if ($pageCommentTarget == null) {
+            $targetId = app('xe.keygen')->generate();
+        } else {
+            $targetId = $pageCommentTarget->page_target_id;
+        }
+
+        return $targetId;
+    }
+
+    /**
      * getPageEntity
      *
      * @param string $pageId page instance id
@@ -125,37 +160,34 @@ class PageHandler
      * @param string $locale locale
      *
      * @return PageEntity|null
+     *
+     * @deprecated since rc.4. use getPageModel instead of
      */
     public function getPageEntity($pageId, $mode, $locale)
     {
-        $config = $this->getPageConfig($pageId);
-        $documentIds = $config->get('pcUids');
-        if ($mode == 'mobile') {
-            $documentIds = $config->get('mobileUids');
-        }
+        $pageEntity = PageEntity::where('page_instance_id', $pageId)->first();
 
-        if (isset($documentIds[$locale])) {
-            $documentId = $documentIds[$locale];
-        } else {
-            $documentId = array_shift($documentIds);
-        }
+        $pageModel = $pageEntity->getPageModel($mode, $locale);
 
-        $model = Document::division($pageId);
-        $doc = $model->where('id', $documentId)->where('locale', $locale)->first();
+        return $pageModel;
+    }
 
-        if ($doc == null) {
-            return null;
-        }
+    /**
+     * getPageModel
+     *
+     * @param string $pageId page instance id
+     * @param string $mode   'pc' or 'mobile'
+     * @param string $locale locale
+     *
+     * @return PageModel|null
+     */
+    public function getPageModel($pageId, $mode = PageComment::MODE_PC, $locale = 'ko')
+    {
+        $pageCommentTarget = PageComment::where('page_instance_id', $pageId)->first();
 
-        $pageEntity = new PageEntity(
-            [
-                'pageId' => $pageId,
-                'uid' => $documentId,
-                'content' => $doc,
-            ]
-        );
+        $pageModel = $pageCommentTarget->getPageModel($mode, $locale);
 
-        return $pageEntity;
+        return $pageModel;
     }
 
     /**
@@ -178,8 +210,14 @@ class PageHandler
         try {
             $pageTitle = '';
             $this->createDocumentInstance($pageId, $pageTitle);
+            $targetId = $this->getPageCommentTargetId($pageId);
+
             $pcDocUid = $this->createPageDocument($pageId, $pageTitle, $siteLocale);
+            $this->createPageCommentTarget($targetId, $pageId, $pcDocUid, PageComment::MODE_PC, $siteLocale);
+
             $mobileDocUid = $this->createPageDocument($pageId, $pageTitle, $siteLocale);
+            $this->createPageCommentTarget($targetId, $pageId, $mobileDocUid, PageComment::MODE_MOBILE, $siteLocale);
+
             $this->addPageConfig(
                 $pageId,
                 array_merge(
@@ -198,7 +236,55 @@ class PageHandler
         }
 
         XeDB::commit();
+    }
 
+    /**
+     * create pageCommentTarget
+     *
+     * @param string $targetId pageCommentTargetId
+     * @param string $pageId   page_instance_id
+     * @param string $docId    page_document_id
+     * @param string $mode     device_mode
+     * @param string $locale   locale
+     *
+     * @return void
+     */
+    public function createPageCommentTarget($targetId, $pageId, $docId, $mode, $locale)
+    {
+        $pageCommentTarget = $this->getPageCommentTarget($pageId);
+
+        if ($pageCommentTarget == null) {
+            $pageCommentTarget = new PageComment();
+
+            $pageCommentTarget->page_target_id = $targetId;
+            $pageCommentTarget->page_instance_id = $pageId;
+            $pageCommentTarget->author_id = $this->auth->user()->getId();
+
+            $data[$mode][$locale] = $docId;
+            $pageCommentTarget->data = json_encode($data);
+
+            $pageCommentTarget->save();
+        } else {
+            $oldData = json_decode($pageCommentTarget['data'], true);
+
+            $oldData[$mode][$locale] = $docId;
+
+            $pageCommentTarget['data'] = json_encode($oldData);
+
+            $pageCommentTarget->save();
+        }
+    }
+
+    /**
+     * remove pageCommentTarget
+     *
+     * @param string $pageId page_instance_id
+     *
+     * @return void
+     */
+    public function removePageCommentTarget($pageId)
+    {
+        PageComment::where('page_instance_id', $pageId)->delete();
     }
 
     /**
@@ -315,6 +401,7 @@ class PageHandler
             $instanceManager = $this->document->getInstanceManager();
             $instanceManager->remove($documentConfig);
             $this->removePageConfig($pageId);
+            $this->removePageCommentTarget($pageId);
         } catch (\Exception $e) {
             XeDB::rollback();
             throw $e;

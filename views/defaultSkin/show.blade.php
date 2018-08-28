@@ -1,4 +1,5 @@
 {{ XeFrontend::title($title) }}
+{{ XeFrontend::css('plugins/page/assets/css/page.css')->load() }}
 
 {!! compile($pageId, $content, true) !!}
 

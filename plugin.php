@@ -17,6 +17,7 @@ use Route;
 use XeConfig;
 use Xpressengine\Plugin\AbstractPlugin;
 use XeLang;
+use Xpressengine\Plugins\Page\Migrations\PageCommentTargetMigration;
 use Xpressengine\Plugins\Page\Module\Page;
 
 /**
@@ -37,9 +38,23 @@ class Plugin extends AbstractPlugin
         $this->importLang();
     }
 
+    /**
+     * update
+     *
+     * @return void
+     *
+     * @throws \Exception
+     */
     public function update()
     {
         $this->importLang();
+
+        $pageCommentTargetMigration = new PageCommentTargetMigration();
+        if ($pageCommentTargetMigration->tableExists() === false) {
+            $pageCommentTargetMigration->up();
+
+            $pageCommentTargetMigration->originDataMigration();
+        }
     }
 
     private function importLang()
@@ -107,5 +122,16 @@ class Plugin extends AbstractPlugin
             Route::get('/', ['as' => 'index', 'uses' => 'PageUserController@index']);
             Route::post('/preview', ['as' => 'preview', 'uses' => 'PageUserController@preview']);
         }, ['namespace' => 'Xpressengine\Plugins\Page\Controller']);
+    }
+
+    public function checkUpdated()
+    {
+        $checkUpdate = true;
+
+        if ((new PageCommentTargetMigration())->tableExists() === false) {
+            $checkUpdate = false;
+        }
+
+        return $checkUpdate;
     }
 }
