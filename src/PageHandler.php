@@ -161,7 +161,7 @@ class PageHandler
      *
      * @return PageEntity|null
      *
-     * @deprecated since rc.4. use getPageModel instead of
+     * @deprecated since rc.5. use getPageModel instead of
      */
     public function getPageEntity($pageId, $mode, $locale)
     {
