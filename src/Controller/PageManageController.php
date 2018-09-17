@@ -16,7 +16,6 @@ namespace Xpressengine\Plugins\Page\Controller;
 use App\Http\Controllers\Controller;
 use App\Http\Sections\EditorSection;
 use App\Http\Sections\SkinSection;
-use Request;
 use Redirect;
 use XePresenter;
 use XeEditor;
@@ -25,6 +24,7 @@ use XeMenu;
 use XeStorage;
 use XeTag;
 use App;
+use Xpressengine\Http\Request;
 use Xpressengine\Plugins\Page\Models\PageComment;
 use Xpressengine\Plugins\Page\Module\Page as PageModule;
 use Xpressengine\Plugins\Page\Module\Page;
@@ -55,11 +55,12 @@ class PageManageController extends Controller
     /**
      * edit
      *
-     * @param string $pageId page instance id
+     * @param Request $request request
+     * @param string  $pageId page instance id
      *
      * @return \Xpressengine\Presenter\RendererInterface
      */
-    public function edit($pageId)
+    public function edit(Request $request, $pageId)
     {
         $handler = $this->pageHandler;
         $item = XeMenu::items()->find($pageId);
@@ -67,7 +68,7 @@ class PageManageController extends Controller
 
         $locales = XeLang::getLocales();
         $siteLocale = $locales[0];
-        $currentLocale = Request::get('locale', $siteLocale);
+        $currentLocale = $request->get('locale', $siteLocale);
         $targetId = $handler->getPageCommentTargetId($pageId);
 
         $config = $handler->getPageConfig($pageId);
@@ -107,19 +108,27 @@ class PageManageController extends Controller
     /**
      * update
      *
-     * @param string $pageId page instance id
+     * @param Request $request request
+     * @param string  $pageId  page instance id
      *
      * @return \Illuminate\Http\RedirectResponse
+     *
+     * @throws \Exception
      */
-    public function update($pageId)
+    public function update(Request $request, $pageId)
     {
+        $this->validate($request, [
+            'pageTitle' => 'required',
+            'content' => 'required',
+        ]);
+
         $handler = $this->pageHandler;
 
-        $documentId = Request::get('id');
-        $content = Request::get('content');
-        $title = Request::get('pageTitle');
-        $locale = Request::get('locale');
-        $mode = Request::get('mode');
+        $documentId = $request->get('id');
+        $content = $request->get('content');
+        $title = $request->get('pageTitle');
+        $locale = $request->get('locale');
+        $mode = $request->get('mode');
 
         // check document exists
         $config = $handler->getPageConfig($pageId);
@@ -135,7 +144,7 @@ class PageManageController extends Controller
 
         $handler->updatePageContent($documentId, $pageId, $content, $title, $locale);
 
-        $inputs = Request::all();
+        $inputs = $request->all();
         /** @var \Xpressengine\Editor\AbstractEditor $editor */
         $editor = XeEditor::get($pageId);
         // file 처리
