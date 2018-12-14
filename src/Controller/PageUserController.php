@@ -1,15 +1,17 @@
 <?php
 /**
- * Page User Controller
+ * PageUserController.php
+ *
+ * This file is part of the Xpressengine package.
  *
  * PHP version 7
  *
  * @category    Page
- * @package     Xpressengine\Plugins\Page\Controller
+ * @package     Xpressengine\Plugins\Page
  * @author      XE Developers <developers@xpressengine.com>
- * @copyright   2015 Copyright (C) NAVER Corp. <http://www.navercorp.com>
+ * @copyright   2015 Copyright (C) NAVER <http://www.navercorp.com>
  * @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html LGPL-2.1
- * @link        https://xpressengine.io
+ * @link        http://www.xpressengine.com
  */
 
 namespace Xpressengine\Plugins\Page\Controller;
@@ -25,10 +27,14 @@ use Xpressengine\Plugins\Page\PageHandler;
 use Xpressengine\Routing\InstanceConfig;
 
 /**
- * Page User Controller
+ * PageUserController
  *
  * @category    Page
- * @package     Xpressengine\Plugins\Page\Controller
+ * @package     Xpressengine\Plugins\Page
+ * @author      XE Developers <developers@xpressengine.com>
+ * @copyright   2015 Copyright (C) NAVER <http://www.navercorp.com>
+ * @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html LGPL-2.1
+ * @link        http://www.xpressengine.com
  */
 class PageUserController extends Controller
 {
@@ -50,10 +56,10 @@ class PageUserController extends Controller
     /**
      * index
      *
-     * @param Request     $request
+     * @param Request     $request     request
      * @param PageHandler $pageHandler page handler
      *
-     * @return \Xpressengine\Presenter\RendererInterface
+     * @return \Xpressengine\Presenter\Presentable
      */
     public function index(Request $request, PageHandler $pageHandler)
     {
@@ -89,10 +95,10 @@ class PageUserController extends Controller
     /**
      * preview
      *
-     * @param Request     $request
+     * @param Request     $request     request
      * @param PageHandler $pageHandler page handler
      *
-     * @return \Xpressengine\Presenter\RendererInterface
+     * @return \Xpressengine\Presenter\Presentable
      */
     public function preview(Request $request, PageHandler $pageHandler)
     {

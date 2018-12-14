@@ -1,14 +1,17 @@
 <?php
 /**
- * Page user skin
+ * DefaultSkin.php
+ *
+ * This file is part of the Xpressengine package.
+ *
+ * PHP version 7
  *
  * @category    Page
  * @package     Xpressengine\Plugins\Page
  * @author      XE Developers <developers@xpressengine.com>
- * @copyright   2015 Copyright (C) NAVER Corp. <http://www.navercorp.com>
- * @license     LGPL-2.1
- * @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * @link        https://xpressengine.io
+ * @copyright   2015 Copyright (C) NAVER <http://www.navercorp.com>
+ * @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html LGPL-2.1
+ * @link        http://www.xpressengine.com
  */
 
 namespace Xpressengine\Plugins\Page\Skin;
@@ -17,14 +20,17 @@ use Xpressengine\Skin\AbstractSkin;
 use View;
 
 /**
- * Page user skin
+ * DefaultSkin
  *
  * @category    Page
  * @package     Xpressengine\Plugins\Page
+ * @author      XE Developers <developers@xpressengine.com>
+ * @copyright   2015 Copyright (C) NAVER <http://www.navercorp.com>
+ * @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html LGPL-2.1
+ * @link        http://www.xpressengine.com
  */
 class DefaultSkin extends AbstractSkin
 {
-
     protected $frame = '_frame';
 
     /**
@@ -54,6 +60,6 @@ class DefaultSkin extends AbstractSkin
      */
     public function getViewFilePath($view)
     {
-        return __DIR__.'/../../views/defaultSkin/'.$view.'.blade.php';
+        return __DIR__ . '/../../views/defaultSkin/' . $view . '.blade.php';
     }
 }

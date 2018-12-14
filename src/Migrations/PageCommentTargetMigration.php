@@ -11,6 +11,7 @@
  * @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html LGPL-2.1
  * @link        https://xpressengine.io
  */
+
 namespace Xpressengine\Plugins\Page\Migrations;
 
 use Illuminate\Database\Schema\Blueprint;
@@ -126,7 +127,6 @@ class PageCommentTargetMigration
                 $pageCommentTarget->save();
 
                 Target::whereIn('target_id', $originDocIds)->update(['target_id' => $pageCommentTargetId]);
-
             }
 
             Target::where('target_type', 'Xpressengine\\Plugins\\Page\\PageEntity')
