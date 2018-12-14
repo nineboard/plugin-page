@@ -1,14 +1,17 @@
 <?php
 /**
- * Page handler
+ * PageHandler.php
+ *
+ * This file is part of the Xpressengine package.
+ *
+ * PHP version 7
  *
  * @category    Page
  * @package     Xpressengine\Plugins\Page
  * @author      XE Developers <developers@xpressengine.com>
- * @copyright   2015 Copyright (C) NAVER Corp. <http://www.navercorp.com>
- * @license     LGPL-2.1
- * @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * @link        https://xpressengine.io
+ * @copyright   2015 Copyright (C) NAVER <http://www.navercorp.com>
+ * @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html LGPL-2.1
+ * @link        http://www.xpressengine.com
  */
 
 namespace Xpressengine\Plugins\Page;
@@ -26,10 +29,14 @@ use Xpressengine\User\GuardInterface;
 use Xpressengine\User\UserInterface;
 
 /**
- * Page handler
+ * PageHandler
  *
  * @category    Page
  * @package     Xpressengine\Plugins\Page
+ * @author      XE Developers <developers@xpressengine.com>
+ * @copyright   2015 Copyright (C) NAVER <http://www.navercorp.com>
+ * @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html LGPL-2.1
+ * @link        http://www.xpressengine.com
  */
 class PageHandler
 {
@@ -54,10 +61,10 @@ class PageHandler
     private $auth;
 
     /**
-     * @param DocumentHandler $document document handler
-     * @param CommentHandler  $comment comment handler
+     * @param DocumentHandler $document      document handler
+     * @param CommentHandler  $comment       comment handler
      * @param ConfigManager   $configManager config manager
-     * @param GuardInterface  $auth auth interface
+     * @param GuardInterface  $auth          auth interface
      */
     public function __construct(
         DocumentHandler $document,
@@ -112,6 +119,7 @@ class PageHandler
      *
      * @param array  $ids    pc or mobile Uids
      * @param string $locale find locale
+     *
      * @return bool
      */
     public function hasLocale(array $ids, $locale)
@@ -196,6 +204,7 @@ class PageHandler
      * @param string $pageId     instance id
      * @param array  $inputs     to create input array
      * @param string $siteLocale site default locale
+     *
      * @return void
      * @throws \Exception
      */
@@ -417,16 +426,18 @@ class PageHandler
      * @param string $pageTitle page title
      * @param string $locale    locale
      * @param string $mode      pc or mobile
+     *
      * @return string
+     * @throws \Exception
      */
     public function createNewLocalePageContent($pageId, $pageTitle, $locale, $mode)
     {
         $config = $this->getPageConfig($pageId);
         $uid = $this->createPageDocument($pageId, $pageTitle, $locale);
         if ($mode == 'pc') {
-            $config->set('pcUids', array_merge($config->get('pcUids'), [$locale  => $uid]));
+            $config->set('pcUids', array_merge($config->get('pcUids'), [$locale => $uid]));
         } else {
-            $config->set('mobileUids', array_merge($config->get('mobileUids'), [$locale  => $uid]));
+            $config->set('mobileUids', array_merge($config->get('mobileUids'), [$locale => $uid]));
         }
 
         $this->updatePageConfig($config);

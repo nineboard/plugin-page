@@ -1,14 +1,17 @@
 <?php
 /**
- * Page module
+ * Page.php
+ *
+ * This file is part of the Xpressengine package.
+ *
+ * PHP version 7
  *
  * @category    Page
  * @package     Xpressengine\Plugins\Page
  * @author      XE Developers <developers@xpressengine.com>
- * @copyright   2015 Copyright (C) NAVER Corp. <http://www.navercorp.com>
- * @license     LGPL-2.1
- * @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * @link        https://xpressengine.io
+ * @copyright   2015 Copyright (C) NAVER <http://www.navercorp.com>
+ * @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html LGPL-2.1
+ * @link        http://www.xpressengine.com
  */
 
 namespace Xpressengine\Plugins\Page\Module;
@@ -22,10 +25,14 @@ use Route;
 use App;
 
 /**
- * Page module class
+ * Page
  *
  * @category    Page
  * @package     Xpressengine\Plugins\Page
+ * @author      XE Developers <developers@xpressengine.com>
+ * @copyright   2015 Copyright (C) NAVER <http://www.navercorp.com>
+ * @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html LGPL-2.1
+ * @link        http://www.xpressengine.com
  */
 class Page extends AbstractModule
 {
@@ -72,9 +79,9 @@ class Page extends AbstractModule
      * @param array  $menuTypeParams for menu type store param array
      * @param array  $itemParams     except menu type param array
      *
-     * @return mixed
+     * @return void
      * @internal param $inputs
-     *
+     * @throws \Exception
      */
     public function storeMenu($instanceId, $menuTypeParams, $itemParams)
     {
@@ -109,7 +116,7 @@ class Page extends AbstractModule
      * @param array  $menuTypeParams for menu type store param array
      * @param array  $itemParams     except menu type param array
      *
-     * @return mixed
+     * @return void
      * @throws \Exception
      */
     public function updateMenu($instanceId, $menuTypeParams, $itemParams)
@@ -126,7 +133,6 @@ class Page extends AbstractModule
 
         $handler->updatePageConfig($pageConfig);
         $handler->createCommentInstance($instanceId, $menuTypeParams['comment']);
-
     }
 
     /**
@@ -134,8 +140,8 @@ class Page extends AbstractModule
      *
      * @param string $instanceId to delete instance id
      *
-     * @return mixed
-     *
+     * @return void
+     * @throws \Exception
      */
     public function deleteMenu($instanceId)
     {
@@ -181,6 +187,7 @@ class Page extends AbstractModule
      * Get menu type's item object
      *
      * @param string $id item id of menu type
+     *
      * @return mixed
      */
     public function getTypeItem($id)

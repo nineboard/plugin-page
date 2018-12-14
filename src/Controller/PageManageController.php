@@ -1,14 +1,17 @@
 <?php
 /**
- * Page Manage Controller
+ * PageManageController.php
+ *
+ * This file is part of the Xpressengine package.
+ *
+ * PHP version 7
  *
  * @category    Page
- * @package     Xpressengine\Plugins\Page\Controller
+ * @package     Xpressengine\Plugins\Page
  * @author      XE Developers <developers@xpressengine.com>
- * @copyright   2015 Copyright (C) NAVER Corp. <http://www.navercorp.com>
- * @license     LGPL-2.1
- * @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * @link        https://xpressengine.io
+ * @copyright   2015 Copyright (C) NAVER <http://www.navercorp.com>
+ * @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html LGPL-2.1
+ * @link        http://www.xpressengine.com
  */
 
 namespace Xpressengine\Plugins\Page\Controller;
@@ -31,10 +34,14 @@ use Xpressengine\Plugins\Page\Module\Page;
 use Xpressengine\Plugins\Page\PageHandler;
 
 /**
- * Page Manage Controller
+ * PageManageController
  *
  * @category    Page
- * @package     Xpressengine\Plugins\Page\Controller
+ * @package     Xpressengine\Plugins\Page
+ * @author      XE Developers <developers@xpressengine.com>
+ * @copyright   2015 Copyright (C) NAVER <http://www.navercorp.com>
+ * @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html LGPL-2.1
+ * @link        http://www.xpressengine.com
  */
 class PageManageController extends Controller
 {
@@ -56,9 +63,9 @@ class PageManageController extends Controller
      * edit
      *
      * @param Request $request request
-     * @param string  $pageId page instance id
+     * @param string  $pageId  page instance id
      *
-     * @return \Xpressengine\Presenter\RendererInterface
+     * @return \Xpressengine\Presenter\Presentable
      */
     public function edit(Request $request, $pageId)
     {
@@ -83,9 +90,20 @@ class PageManageController extends Controller
         }
 
         if ($handler->hasLocale($config->get('mobileUids'), $currentLocale) === false) {
-            $mobileDocumentId = $handler->createNewLocalePageContent($pageId, '', $currentLocale, PageComment::MODE_MOBILE);
+            $mobileDocumentId = $handler->createNewLocalePageContent(
+                $pageId,
+                '',
+                $currentLocale,
+                PageComment::MODE_MOBILE
+            );
 
-            $handler->createPageCommentTarget($targetId, $pageId, $mobileDocumentId, PageComment::MODE_MOBILE, $currentLocale);
+            $handler->createPageCommentTarget(
+                $targetId,
+                $pageId,
+                $mobileDocumentId,
+                PageComment::MODE_MOBILE,
+                $currentLocale
+            );
 
             $mobilePage = $handler->getPageModel($pageId, PageComment::MODE_MOBILE, $currentLocale);
         } else {
@@ -155,6 +173,13 @@ class PageManageController extends Controller
         return Redirect::back();
     }
 
+    /**
+     * edit editor
+     *
+     * @param string $pageId page id
+     *
+     * @return mixed|\Xpressengine\Presenter\Presentable
+     */
     public function editEditor($pageId)
     {
         $handler = $this->pageHandler;
@@ -169,6 +194,11 @@ class PageManageController extends Controller
         ]);
     }
 
+    /**
+     * @param string $pageId page id
+     *
+     * @return mixed|\Xpressengine\Presenter\Presentable
+     */
     public function editSkin($pageId)
     {
         $skinSection = new SkinSection(Page::getId(), $pageId);

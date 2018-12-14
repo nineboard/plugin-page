@@ -1,14 +1,17 @@
 <?php
 /**
- * Page plugin
+ * Plugin.php
+ *
+ * This file is part of the Xpressengine package.
+ *
+ * PHP version 7
  *
  * @category    Page
- * @package     Page
+ * @package     Xpressengine\Plugins\Page
  * @author      XE Developers <developers@xpressengine.com>
- * @copyright   2015 Copyright (C) NAVER Corp. <http://www.navercorp.com>
- * @license     LGPL-2.1
- * @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * @link        https://xpressengine.io
+ * @copyright   2015 Copyright (C) NAVER <http://www.navercorp.com>
+ * @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html LGPL-2.1
+ * @link        http://www.xpressengine.com
  */
 
 namespace Xpressengine\Plugins\Page;
@@ -21,10 +24,14 @@ use Xpressengine\Plugins\Page\Migrations\PageCommentTargetMigration;
 use Xpressengine\Plugins\Page\Module\Page;
 
 /**
- * Page plugin
+ * Plugin
  *
  * @category    Page
- * @package     Page
+ * @package     Xpressengine\Plugins\Page
+ * @author      XE Developers <developers@xpressengine.com>
+ * @copyright   2015 Copyright (C) NAVER <http://www.navercorp.com>
+ * @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html LGPL-2.1
+ * @link        http://www.xpressengine.com
  */
 class Plugin extends AbstractPlugin
 {
@@ -57,6 +64,11 @@ class Plugin extends AbstractPlugin
         }
     }
 
+    /**
+     * import lang
+     *
+     * @return void
+     */
     private function importLang()
     {
         XeLang::putFromLangDataSource(self::getId(), __DIR__.'/langs/lang.php');
@@ -106,6 +118,11 @@ class Plugin extends AbstractPlugin
         $app->alias(PageHandler::class, 'xe.page.handler');
     }
 
+    /**
+     * register route
+     *
+     * @return void
+     */
     private function routes()
     {
         Route::settings(Page::getId(), function () {
@@ -114,8 +131,14 @@ class Plugin extends AbstractPlugin
                 'update/{pageId}',
                 ['as' => 'manage.plugin.page.update', 'uses' => 'PageManageController@update']
             );
-            Route::get('editor/edit/{pageId}', ['as' => 'manage.plugin.page.editor', 'uses' => 'PageManageController@editEditor']);
-            Route::get('skin/edit/{pageId}', ['as' => 'manage.plugin.page.skin', 'uses' => 'PageManageController@editSkin']);
+            Route::get(
+                'editor/edit/{pageId}',
+                ['as' => 'manage.plugin.page.editor', 'uses' => 'PageManageController@editEditor']
+            );
+            Route::get(
+                'skin/edit/{pageId}',
+                ['as' => 'manage.plugin.page.skin', 'uses' => 'PageManageController@editSkin']
+            );
         }, ['namespace' => 'Xpressengine\Plugins\Page\Controller']);
 
         Route::instance(Page::getId(), function () {
@@ -124,6 +147,11 @@ class Plugin extends AbstractPlugin
         }, ['namespace' => 'Xpressengine\Plugins\Page\Controller']);
     }
 
+    /**
+     * check update
+     *
+     * @return bool
+     */
     public function checkUpdated()
     {
         $checkUpdate = true;
