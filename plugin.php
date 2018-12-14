@@ -36,6 +36,7 @@ class Plugin extends AbstractPlugin
     public function install()
     {
         $this->importLang();
+        (new PageCommentTargetMigration())->up();
     }
 
     /**
@@ -49,6 +50,7 @@ class Plugin extends AbstractPlugin
     {
         $this->importLang();
 
+        // v0.9.11
         $pageCommentTargetMigration = new PageCommentTargetMigration();
         if ($pageCommentTargetMigration->tableExists() === false) {
             $pageCommentTargetMigration->up();
@@ -127,7 +129,7 @@ class Plugin extends AbstractPlugin
     public function checkUpdated()
     {
         $checkUpdate = true;
-
+        // v0.9.11
         if ((new PageCommentTargetMigration())->tableExists() === false) {
             $checkUpdate = false;
         }
