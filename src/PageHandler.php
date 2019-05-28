@@ -554,4 +554,20 @@ class PageHandler
 
         $this->document->getInstanceManager()->add($documentConfig);
     }
+
+    public function saveThumbId($pageId, $id, $coverId)
+    {
+        $config = $this->getPageConfig($pageId);
+        $thumbs = $config->get('thumbs', []);
+        $thumbs[$id] = $coverId;
+        $config->set('thumbs', $thumbs);
+        $this->updatePageConfig($config);
+    }
+
+    public function getThumbId($pageId, $id)
+    {
+        $config = $this->getPageConfig($pageId);
+        $thumbs = $config->get('thumbs', []);
+        return isset($thumbs[$id]) ? $thumbs[$id] : null;
+    }
 }

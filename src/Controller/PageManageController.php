@@ -88,6 +88,7 @@ class PageManageController extends Controller
         } else {
             $pcPage = $handler->getPageModel($pageId, PageComment::MODE_PC, $currentLocale);
         }
+        $thumbId = $handler->getThumbId($pageId, $pcPage->id);
 
         if ($config->get('mobile') == true && $handler->hasLocale($config->get('mobileUids'), $currentLocale) === false) {
             $mobileDocumentId = $handler->createNewLocalePageContent(
@@ -109,6 +110,7 @@ class PageManageController extends Controller
         } else {
             $mobilePage = $handler->getPageModel($pageId, PageComment::MODE_MOBILE, $currentLocale);
         }
+        $mobileThumbId = $handler->getThumbId($pageId, $mobilePage->id);
 
         XePresenter::widgetParsing(false);
         return XePresenter::make('edit', [
@@ -120,6 +122,8 @@ class PageManageController extends Controller
             'currentLocale' => $currentLocale,
             'locales' => $locales,
             'siteLocale' => $siteLocale,
+            'thumbId' => $thumbId,
+            'mobileThumbId' => $mobileThumbId,
         ]);
     }
 
@@ -169,6 +173,10 @@ class PageManageController extends Controller
         XeStorage::sync($documentId, array_get($inputs, $editor->getFileInputName(), []));
         // tag 처리
         XeTag::set($documentId, array_get($inputs, $editor->getTagInputName(), []), $pageId);
+
+        if ($request->get('_coverId')) {
+            $handler->saveThumbId($pageId, $documentId, $request->get('_coverId'));
+        }
 
         return Redirect::back();
     }

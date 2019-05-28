@@ -64,7 +64,11 @@
                                 <div class="clearfix">
                                     <label>{{xe_trans('xe::content')}}</label>
                                 </div>
-                                {!! editor($pageId, ['contentDomId' => 'xePcContentEditor', 'content' => $pcPage->content], $pcPage->id) !!}
+                                {!! editor($pageId, [
+                                'contentDomId' => 'xePcContentEditor',
+                                'content' => $pcPage->content,
+                                'cover' => true,
+                                ], $pcPage->id, $thumbId ? $thumbId : null) !!}
                             </div>
                         </div>
                     </div>
@@ -112,7 +116,11 @@
                                     <div class="clearfix">
                                         <label>{{xe_trans('xe::content')}}</label>
                                     </div>
-                                    {!! editor($pageId, ['contentDomId' => 'xeMobileContentEditor', 'content' => $mobilePage->content], $mobilePage->id) !!}
+                                    {!! editor($pageId, [
+                                    'contentDomId' => 'xeMobileContentEditor',
+                                    'content' => $mobilePage->content,
+                                    'cover' => true,
+                                    ], $mobilePage->id, $mobileThumbId ? $mobileThumbId : null) !!}
                                 </div>
                             </div>
                         </div>
