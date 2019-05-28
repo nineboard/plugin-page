@@ -85,7 +85,8 @@ class PageUserController extends Controller
 
         return XePresenter::make('show', [
             'pageId' => $pageId,
-            'page' => $pageCommentTarget,
+            'page' => $page,
+            'pageCommentTarget' => $pageCommentTarget,
             'title' => $page->title,
             'content' => $page->content,
             'config' => $config
