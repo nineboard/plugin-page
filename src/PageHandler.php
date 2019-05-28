@@ -221,20 +221,22 @@ class PageHandler
             $this->createDocumentInstance($pageId, $pageTitle);
             $targetId = $this->getPageCommentTargetId($pageId);
 
+            $uids = [];
             $pcDocUid = $this->createPageDocument($pageId, $pageTitle, $siteLocale);
             $this->createPageCommentTarget($targetId, $pageId, $pcDocUid, PageComment::MODE_PC, $siteLocale);
+            $uids['pcUids'] = [$siteLocale => $pcDocUid];
 
-            $mobileDocUid = $this->createPageDocument($pageId, $pageTitle, $siteLocale);
-            $this->createPageCommentTarget($targetId, $pageId, $mobileDocUid, PageComment::MODE_MOBILE, $siteLocale);
+            $uids['mobileUids'] = [];
+            if (isset($inputs['mobile']) && $inputs['mobile'] == 'true') {
+                $mobileDocUid = $this->createPageDocument($pageId, $pageTitle, $siteLocale);
+                $this->createPageCommentTarget($targetId, $pageId, $mobileDocUid, PageComment::MODE_MOBILE, $siteLocale);
+            }
 
             $this->addPageConfig(
                 $pageId,
                 array_merge(
                     $inputs,
-                    [
-                        'pcUids' => [$siteLocale => $pcDocUid],
-                        'mobileUids' => [$siteLocale => $mobileDocUid]
-                    ]
+                    $uids
                 )
             );
 
@@ -512,6 +514,27 @@ class PageHandler
     public function updatePageConfig($config)
     {
         $this->configManager->modify($config);
+
+        $mobile = $config->get('mobile');
+        $ids = $config->get('mobileUids');
+        if ($mobile == true && $ids) {
+            $items = PageModel::whereIn('id', $ids)->get();
+            if ($items->count() > 0) {
+                foreach ($items as $item) {
+                    $item->setDisplay(PageModel::DISPLAY_VISIBLE);
+                    $item->save();
+                }
+            }
+        } elseif ($ids) {
+            $ids = $config->get('mobileUids');
+            $items = PageModel::whereIn('id', $ids)->get();
+            if ($items->count() > 0) {
+                foreach ($items as $item) {
+                    $item->setDisplay(PageModel::DISPLAY_HIDDEN);
+                    $item->save();
+                }
+            }
+        }
     }
 
     /**

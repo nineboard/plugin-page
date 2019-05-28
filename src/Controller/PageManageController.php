@@ -89,7 +89,7 @@ class PageManageController extends Controller
             $pcPage = $handler->getPageModel($pageId, PageComment::MODE_PC, $currentLocale);
         }
 
-        if ($handler->hasLocale($config->get('mobileUids'), $currentLocale) === false) {
+        if ($config->get('mobile') == true && $handler->hasLocale($config->get('mobileUids'), $currentLocale) === false) {
             $mobileDocumentId = $handler->createNewLocalePageContent(
                 $pageId,
                 '',
