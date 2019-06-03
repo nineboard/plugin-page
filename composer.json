@@ -1,6 +1,6 @@
 {
     "name": "xpressengine-plugin/page",
-    "description": "XpressEngine's page plugin for bundle (XE)",
+    "description": "심플 페이지 기능을 제공하는 플러그인입니다.",
     "keywords": [
         "xpressengine bundle",
         "XE page",
@@ -11,7 +11,7 @@
         {
             "name": "XE Developers",
             "email": "developers@xpressengine.com",
-            "homepage": "http://xpressengine.io",
+            "homepage": "https://store.xehub.io/plugins/page",
             "role": "Developer"
         }
     ],
