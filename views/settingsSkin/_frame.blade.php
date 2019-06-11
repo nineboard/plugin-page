@@ -5,10 +5,6 @@
 @section('page_description')
 @endsection
 
-@section('content_bread_crumbs')
-    <a href="{{ route('settings.menu.edit.item', ['menuId' => $menuItem->menu_id, 'itemId' => $menuItem->id]) }}"><i class="xi-arrow-left"></i> &quot;{{xe_trans($menuItem->title)}}&quot; {{xe_trans('xe::menu')}}</a>
-@endsection
-
 {{-- $_active 는 SettingsSkin 에서 처리됨 --}}
 <ul class="nav nav-tabs">
     <li @if($_active == 'edit') class="active" @endif><a href="{{ route('manage.plugin.page.edit', ['pageId' => $pageId]) }}">{{xe_trans('xe::config')}}</a></li>
