@@ -6,7 +6,7 @@
         "XE page",
         "Xpressengine3 page"
     ],
-    "version": "1.0.3",
+    "version": "1.0.4",
     "authors": [
         {
             "name": "XE Developers",
@@ -52,7 +52,7 @@
         }
     },
     "require": {
-        "xpressengine/xpressengine": "~3.0.2",
+        "xpressengine/xpressengine": "^3.0.2",
         "xpressengine-plugin/ckeditor": "*"
     }
 }
