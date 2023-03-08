@@ -15,7 +15,7 @@
                                                 <li>
                                                     @if(Request::get('locale') == $locale) > @endif
 
-                                                    <a href="{{ route('manage.plugin.page.edit', ['id' => $pageId, 'locale' => $locale]) }}" @if(Request::get('locale') == $locale) class="active" @endif >{{ $locale }}</a>
+                                                    <a href="{{ route('manage.plugin.page.edit', ['pageId' => $pageId, 'locale' => $locale]) }}" @if(Request::get('locale') == $locale) class="active" @endif >{{ $locale }}</a>
 
                                                     @if(empty($config->get('pcUids')[$locale])) [PC emtpy] @endif
                                                     @if(empty($config->get('mobileUids')[$locale])) [Mobile emtpy] @endif
