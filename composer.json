@@ -1,5 +1,5 @@
 {
-    "name": "xpressengine-plugin/page",
+    "name": "nineboard/plugin-page",
     "description": "심플 페이지 기능을 제공하는 플러그인입니다.",
     "keywords": [
         "xpressengine bundle",
@@ -35,13 +35,13 @@
                     "class": "Xpressengine\\Plugins\\Page\\Skin\\DefaultSkin",
                     "name": "Page Default Skin",
                     "description": "Page Module Default Skin",
-                    "screenshot" : []
+                    "screenshot": []
                 },
                 "module/page@page/settingsSkin/page@default": {
                     "class": "Xpressengine\\Plugins\\Page\\Skin\\SettingsSkin",
                     "name": "Page Default Skin for Manager",
                     "description": "Page Default Skin for Manager",
-                    "screenshot" : []
+                    "screenshot": []
                 }
             }
         }
@@ -52,7 +52,26 @@
         }
     },
     "require": {
-        "xpressengine/xpressengine": "^3.0.2",
-        "xpressengine-plugin/ckeditor": "*"
+        "nineboard/nineboard": "dev-main",
+        "nineboard/plugin-ckeditor": "dev-main"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git://github.com/nineboard/nineboard.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git://github.com/nineboard/plugin-ckeditor.git"
+        }
+    ],
+    "config": {
+        "allow-plugins": {
+            "xpressengine/installer": false,
+            "wikimedia/composer-merge-plugin": false
+        }
+    },
+    "require-dev": {
+        "laravel/pint": "^1.0.0"
     }
 }

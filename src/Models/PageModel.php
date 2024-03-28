@@ -5,30 +5,33 @@
  * PHP version 7
  *
  * @category    Page
- * @package     Xpressengine\Plugins\Page
+ *
  * @author      XE Developers <developers@xpressengine.com>
  * @copyright   2019 Copyright XEHub Corp. <https://www.xehub.io>
  * @license     http://www.gnu.org/licenses/lgpl-3.0-standalone.html LGPL
+ *
  * @link        https://xpressengine.io
  */
+
 namespace Xpressengine\Plugins\Page\Models;
 
 use Xpressengine\Document\Models\Document;
+use Xpressengine\Media\MediaManager;
+use Xpressengine\Media\Models\Media;
 use Xpressengine\Plugins\Comment\CommentUsable;
 use Xpressengine\Routing\InstanceRoute;
-use Xpressengine\User\UserInterface;
 use Xpressengine\Seo\SeoUsable;
-use Xpressengine\Media\Models\Media;
-use Xpressengine\Media\MediaManager;
+use Xpressengine\User\UserInterface;
 
 /**
  * Page Model
  *
  * @category    Page
- * @package     Xpressengine\Plugins\Page
+ *
  * @author      XE Developers <developers@xpressengine.com>
  * @copyright   2019 Copyright XEHub Corp. <https://www.xehub.io>
  * @license     http://www.gnu.org/licenses/lgpl-3.0-standalone.html LGPL
+ *
  * @link        https://xpressengine.io
  */
 class PageModel extends Document implements CommentUsable, SeoUsable
@@ -66,7 +69,7 @@ class PageModel extends Document implements CommentUsable, SeoUsable
     /**
      * Returns the link
      *
-     * @param InstanceRoute $route route instance
+     * @param  InstanceRoute  $route  route instance
      * @return string
      */
     public function getLink(InstanceRoute $route)
@@ -133,7 +136,7 @@ class PageModel extends Document implements CommentUsable, SeoUsable
     /**
      * Set canonical url
      *
-     * @param string $url url
+     * @param  string  $url  url
      * @return $this
      */
     public function setCanonical($url)
@@ -170,5 +173,4 @@ class PageModel extends Document implements CommentUsable, SeoUsable
 
         return $images;
     }
-
 }

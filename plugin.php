@@ -7,10 +7,11 @@
  * PHP version 7
  *
  * @category    Page
- * @package     Xpressengine\Plugins\Page
+ *
  * @author      XE Developers <developers@xpressengine.com>
  * @copyright   2019 Copyright XEHub Corp. <https://www.xehub.io>
  * @license     http://www.gnu.org/licenses/lgpl-3.0-standalone.html LGPL
+ *
  * @link        https://xpressengine.io
  */
 
@@ -18,8 +19,8 @@ namespace Xpressengine\Plugins\Page;
 
 use Route;
 use XeConfig;
-use Xpressengine\Plugin\AbstractPlugin;
 use XeLang;
+use Xpressengine\Plugin\AbstractPlugin;
 use Xpressengine\Plugins\Page\Migrations\PageCommentTargetMigration;
 use Xpressengine\Plugins\Page\Module\Page;
 
@@ -27,10 +28,11 @@ use Xpressengine\Plugins\Page\Module\Page;
  * Plugin
  *
  * @category    Page
- * @package     Xpressengine\Plugins\Page
+ *
  * @author      XE Developers <developers@xpressengine.com>
  * @copyright   2019 Copyright XEHub Corp. <https://www.xehub.io>
  * @license     http://www.gnu.org/licenses/lgpl-3.0-standalone.html LGPL
+ *
  * @link        https://xpressengine.io
  */
 class Plugin extends AbstractPlugin
@@ -79,7 +81,7 @@ class Plugin extends AbstractPlugin
     /**
      * activate
      *
-     * @param null $installedVersion installed version
+     * @param  null  $installedVersion  installed version
      * @return void
      */
     public function activate($installedVersion = null)

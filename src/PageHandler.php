@@ -7,10 +7,11 @@
  * PHP version 7
  *
  * @category    Page
- * @package     Xpressengine\Plugins\Page
+ *
  * @author      XE Developers <developers@xpressengine.com>
  * @copyright   2019 Copyright XEHub Corp. <https://www.xehub.io>
  * @license     http://www.gnu.org/licenses/lgpl-3.0-standalone.html LGPL
+ *
  * @link        https://xpressengine.io
  */
 
@@ -32,10 +33,11 @@ use Xpressengine\User\UserInterface;
  * PageHandler
  *
  * @category    Page
- * @package     Xpressengine\Plugins\Page
+ *
  * @author      XE Developers <developers@xpressengine.com>
  * @copyright   2019 Copyright XEHub Corp. <https://www.xehub.io>
  * @license     http://www.gnu.org/licenses/lgpl-3.0-standalone.html LGPL
+ *
  * @link        https://xpressengine.io
  */
 class PageHandler
@@ -61,10 +63,10 @@ class PageHandler
     private $auth;
 
     /**
-     * @param DocumentHandler $document      document handler
-     * @param CommentHandler  $comment       comment handler
-     * @param ConfigManager   $configManager config manager
-     * @param GuardInterface  $auth          auth interface
+     * @param  DocumentHandler  $document  document handler
+     * @param  CommentHandler  $comment  comment handler
+     * @param  ConfigManager  $configManager  config manager
+     * @param  GuardInterface  $auth  auth interface
      */
     public function __construct(
         DocumentHandler $document,
@@ -82,6 +84,7 @@ class PageHandler
      * saveDefaultConfig
      *
      * @return void
+     *
      * @throws \Xpressengine\Config\Exceptions\InvalidArgumentException
      */
     public function saveDefaultConfig()
@@ -105,8 +108,7 @@ class PageHandler
     /**
      * getPageConfig
      *
-     * @param string $pageId instance id
-     *
+     * @param  string  $pageId  instance id
      * @return ConfigEntity
      */
     public function getPageConfig($pageId)
@@ -117,9 +119,8 @@ class PageHandler
     /**
      * has locale
      *
-     * @param array  $ids    pc or mobile Uids
-     * @param string $locale find locale
-     *
+     * @param  array  $ids  pc or mobile Uids
+     * @param  string  $locale  find locale
      * @return bool
      */
     public function hasLocale(array $ids, $locale)
@@ -128,8 +129,7 @@ class PageHandler
     }
 
     /**
-     * @param string $pageId page instance id
-     *
+     * @param  string  $pageId  page instance id
      * @return PageComment
      */
     public function getPageCommentTarget($pageId)
@@ -142,8 +142,7 @@ class PageHandler
     /**
      * create or get pageCommentTargetId
      *
-     * @param  string $pageId page_instance_id
-     *
+     * @param  string  $pageId  page_instance_id
      * @return string|null
      */
     public function getPageCommentTargetId($pageId)
@@ -163,10 +162,9 @@ class PageHandler
     /**
      * getPageEntity
      *
-     * @param string $pageId page instance id
-     * @param string $mode   'pc' or 'mobile'
-     * @param string $locale locale
-     *
+     * @param  string  $pageId  page instance id
+     * @param  string  $mode  'pc' or 'mobile'
+     * @param  string  $locale  locale
      * @return PageEntity|null
      *
      * @deprecated since rc.5. use getPageModel instead of
@@ -183,10 +181,9 @@ class PageHandler
     /**
      * getPageModel
      *
-     * @param string $pageId page instance id
-     * @param string $mode   'pc' or 'mobile'
-     * @param string $locale locale
-     *
+     * @param  string  $pageId  page instance id
+     * @param  string  $mode  'pc' or 'mobile'
+     * @param  string  $locale  locale
      * @return PageModel|null
      */
     public function getPageModel($pageId, $mode = PageComment::MODE_PC, $locale = 'ko')
@@ -201,11 +198,11 @@ class PageHandler
     /**
      * createPageInstance
      *
-     * @param string $pageId     instance id
-     * @param array  $inputs     to create input array
-     * @param string $siteLocale site default locale
-     *
+     * @param  string  $pageId  instance id
+     * @param  array  $inputs  to create input array
+     * @param  string  $siteLocale  site default locale
      * @return void
+     *
      * @throws \Exception
      */
     public function createPageInstance($pageId, array $inputs, $siteLocale)
@@ -252,12 +249,11 @@ class PageHandler
     /**
      * create pageCommentTarget
      *
-     * @param string $targetId pageCommentTargetId
-     * @param string $pageId   page_instance_id
-     * @param string $docId    page_document_id
-     * @param string $mode     device_mode
-     * @param string $locale   locale
-     *
+     * @param  string  $targetId  pageCommentTargetId
+     * @param  string  $pageId  page_instance_id
+     * @param  string  $docId  page_document_id
+     * @param  string  $mode  device_mode
+     * @param  string  $locale  locale
      * @return void
      */
     public function createPageCommentTarget($targetId, $pageId, $docId, $mode, $locale)
@@ -289,8 +285,7 @@ class PageHandler
     /**
      * remove pageCommentTarget
      *
-     * @param string $pageId page_instance_id
-     *
+     * @param  string  $pageId  page_instance_id
      * @return void
      */
     public function removePageCommentTarget($pageId)
@@ -301,24 +296,23 @@ class PageHandler
     /**
      * existPageInstance
      *
-     * @param string $pageId page instance id
-     *
+     * @param  string  $pageId  page instance id
      * @return bool
      */
     protected function existPageInstance($pageId)
     {
         $configName = $this->getConfigKeyString($pageId);
 
-        return ($this->configManager->get($configName) !== null);
+        return $this->configManager->get($configName) !== null;
     }
 
     /**
      * addPageConfig
      *
-     * @param string $pageId      page instance id
-     * @param array  $pageConfigs parameter array
-     *
+     * @param  string  $pageId  page instance id
+     * @param  array  $pageConfigs  parameter array
      * @return void
+     *
      * @throws \Xpressengine\Config\Exceptions\InvalidArgumentException
      */
     protected function addPageConfig($pageId, $pageConfigs)
@@ -330,11 +324,11 @@ class PageHandler
     /**
      * createPageDocument
      *
-     * @param string $pageId    page instance id
-     * @param string $pageTitle page title
-     * @param string $locale    locale
-     *
+     * @param  string  $pageId  page instance id
+     * @param  string  $pageTitle  page title
+     * @param  string  $locale  locale
      * @return string
+     *
      * @throws \Exception
      */
     public function createPageDocument($pageId, $pageTitle, $locale)
@@ -368,13 +362,13 @@ class PageHandler
     /**
      * updatePageContent
      *
-     * @param string $documentUid page content document id
-     * @param string $pageId      page instance id
-     * @param array  $content     content string
-     * @param array  $title       title string
-     * @param array  $locale      locale
-     *
+     * @param  string  $documentUid  page content document id
+     * @param  string  $pageId  page instance id
+     * @param  array  $content  content string
+     * @param  array  $title  title string
+     * @param  array  $locale  locale
      * @return void
+     *
      * @throws \Exception
      */
     public function updatePageContent($documentUid, $pageId, $content, $title, $locale)
@@ -398,9 +392,9 @@ class PageHandler
     /**
      * dropPage
      *
-     * @param string $pageId page instance id
-     *
+     * @param  string  $pageId  page instance id
      * @return void
+     *
      * @throws \Exception
      */
     public function dropPage($pageId)
@@ -424,12 +418,12 @@ class PageHandler
     /**
      * create new locale page content by mode
      *
-     * @param string $pageId    page instance id
-     * @param string $pageTitle page title
-     * @param string $locale    locale
-     * @param string $mode      pc or mobile
-     *
+     * @param  string  $pageId  page instance id
+     * @param  string  $pageTitle  page title
+     * @param  string  $locale  locale
+     * @param  string  $mode  pc or mobile
      * @return string
+     *
      * @throws \Exception
      */
     public function createNewLocalePageContent($pageId, $pageTitle, $locale, $mode)
@@ -450,8 +444,7 @@ class PageHandler
     /**
      * removePageConfig
      *
-     * @param string $pageId page instance id
-     *
+     * @param  string  $pageId  page instance id
      * @return void
      */
     protected function removePageConfig($pageId)
@@ -463,9 +456,8 @@ class PageHandler
     /**
      * getPageContent
      *
-     * @param string $id     page content id
-     * @param string $pageId page instance id
-     *
+     * @param  string  $id  page content id
+     * @param  string  $pageId  page instance id
      * @return Document
      */
     public function getPageContent($id, $pageId)
@@ -476,8 +468,7 @@ class PageHandler
     /**
      * getConfigKeyString
      *
-     * @param string $pageId page instance id
-     *
+     * @param  string  $pageId  page instance id
      * @return string
      */
     protected function getConfigKeyString($pageId)
@@ -488,9 +479,8 @@ class PageHandler
     /**
      * createCommentInstance
      *
-     * @param string $pageId       page instance id
-     * @param string $commentInput comment parameter
-     *
+     * @param  string  $pageId  page instance id
+     * @param  string  $commentInput  comment parameter
      * @return void
      */
     public function createCommentInstance($pageId, $commentInput)
@@ -506,9 +496,9 @@ class PageHandler
     /**
      * updatePageConfig
      *
-     * @param ConfigEntity $config page config entity
-     *
+     * @param  ConfigEntity  $config  page config entity
      * @return void
+     *
      * @throws \Xpressengine\Config\Exceptions\InvalidArgumentException
      */
     public function updatePageConfig($config)
@@ -540,9 +530,8 @@ class PageHandler
     /**
      * createDocumentInstance
      *
-     * @param string $pageId    page instance id
-     * @param string $pageTitle page title
-     *
+     * @param  string  $pageId  page instance id
+     * @param  string  $pageTitle  page title
      * @return void
      */
     protected function createDocumentInstance($pageId, $pageTitle)
@@ -568,6 +557,7 @@ class PageHandler
     {
         $config = $this->getPageConfig($pageId);
         $thumbs = $config->get('thumbs', []);
+
         return isset($thumbs[$id]) ? $thumbs[$id] : null;
     }
 }

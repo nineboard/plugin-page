@@ -5,10 +5,11 @@
  * PHP version 7
  *
  * @category    Page
- * @package     Xpressengine\Plugins\Page
+ *
  * @author      XE Developers <developers@xpressengine.com>
  * @copyright   2019 Copyright XEHub Corp. <https://www.xehub.io>
  * @license     http://www.gnu.org/licenses/lgpl-3.0-standalone.html LGPL
+ *
  * @link        https://xpressengine.io
  */
 
@@ -25,15 +26,17 @@ use Xpressengine\User\UserInterface;
  * Page Entity
  *
  * @category    Page
- * @package     Xpressengine\Plugins\Page
+ *
  * @author      XE Developers <developers@xpressengine.com>
  * @copyright   2019 Copyright XEHub Corp. <https://www.xehub.io>
  * @license     http://www.gnu.org/licenses/lgpl-3.0-standalone.html LGPL
+ *
  * @link        https://xpressengine.io
  */
 class PageEntity extends Model implements CommentUsable
 {
     const MODE_PC = 'pc';
+
     const MODE_MOBILE = 'mobile';
 
     protected $table = PageCommentTargetMigration::TABLE_NAME;
@@ -79,7 +82,7 @@ class PageEntity extends Model implements CommentUsable
     /**
      * Returns the link
      *
-     * @param InstanceRoute $route route instance
+     * @param  InstanceRoute  $route  route instance
      * @return string
      */
     public function getLink(InstanceRoute $route)
@@ -89,9 +92,9 @@ class PageEntity extends Model implements CommentUsable
 
     /**
      * Get PageModel
-     * @param string $mode   'pc' or 'mobile'
-     * @param string $locale locale
      *
+     * @param  string  $mode  'pc' or 'mobile'
+     * @param  string  $locale  locale
      * @return PageModel|null
      */
     public function getPageModel($mode = self::MODE_PC, $locale = 'ko')

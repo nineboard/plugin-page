@@ -7,36 +7,37 @@
  * PHP version 7
  *
  * @category    Page
- * @package     Xpressengine\Plugins\Page
+ *
  * @author      XE Developers <developers@xpressengine.com>
  * @copyright   2019 Copyright XEHub Corp. <https://www.xehub.io>
  * @license     http://www.gnu.org/licenses/lgpl-3.0-standalone.html LGPL
+ *
  * @link        https://xpressengine.io
  */
 
 namespace Xpressengine\Plugins\Page\Module;
 
+use View;
 use XeConfig;
 use XeEditor;
-use Xpressengine\Plugins\Page\PageHandler;
-use View;
 use Xpressengine\Menu\AbstractModule;
-use Route;
-use App;
+use Xpressengine\Plugins\Page\PageHandler;
 
 /**
  * Page
  *
  * @category    Page
- * @package     Xpressengine\Plugins\Page
+ *
  * @author      XE Developers <developers@xpressengine.com>
  * @copyright   2019 Copyright XEHub Corp. <https://www.xehub.io>
  * @license     http://www.gnu.org/licenses/lgpl-3.0-standalone.html LGPL
+ *
  * @link        https://xpressengine.io
  */
 class Page extends AbstractModule
 {
     const FILE_UPLOAD_PATH = 'public/plugin/page';
+
     const THUMBNAIL_TYPE = 'spill';
 
     /**
@@ -67,7 +68,8 @@ class Page extends AbstractModule
     public function createMenuForm()
     {
         $config = XeConfig::get(self::getId());   // 기본 설정
-        return View::file(__DIR__ . '/../../views/menuType/menuCreate.blade.php', [
+
+        return View::file(__DIR__.'/../../views/menuType/menuCreate.blade.php', [
             'config' => $config,
         ])->render();
     }
@@ -75,12 +77,13 @@ class Page extends AbstractModule
     /**
      * Process to Store
      *
-     * @param string $instanceId     page instance id
-     * @param array  $menuTypeParams for menu type store param array
-     * @param array  $itemParams     except menu type param array
-     *
+     * @param  string  $instanceId  page instance id
+     * @param  array  $menuTypeParams  for menu type store param array
+     * @param  array  $itemParams  except menu type param array
      * @return void
+     *
      * @internal param $inputs
+     *
      * @throws \Exception
      */
     public function storeMenu($instanceId, $menuTypeParams, $itemParams)
@@ -93,30 +96,29 @@ class Page extends AbstractModule
     /**
      * Return Edit Form View
      *
-     * @param string $instanceId to edit instance id
-     *
+     * @param  string  $instanceId  to edit instance id
      * @return mixed
-     *
      */
     public function editMenuForm($instanceId)
     {
         $config = $this->getPageHandler()->getPageConfig($instanceId);   // 기본 설정
 
-        $form = View::file(__DIR__ . '/../../views/menuType/menuEdit.blade.php', [
+        $form = View::file(__DIR__.'/../../views/menuType/menuEdit.blade.php', [
             'pageId' => $instanceId,
             'config' => $config,
         ])->render();
+
         return $form;
     }
 
     /**
      * Process to Update
      *
-     * @param string $instanceId     to store instance id
-     * @param array  $menuTypeParams for menu type store param array
-     * @param array  $itemParams     except menu type param array
-     *
+     * @param  string  $instanceId  to store instance id
+     * @param  array  $menuTypeParams  for menu type store param array
+     * @param  array  $itemParams  except menu type param array
      * @return void
+     *
      * @throws \Exception
      */
     public function updateMenu($instanceId, $menuTypeParams, $itemParams)
@@ -138,9 +140,9 @@ class Page extends AbstractModule
     /**
      * Process to delete
      *
-     * @param string $instanceId to delete instance id
-     *
+     * @param  string  $instanceId  to delete instance id
      * @return void
+     *
      * @throws \Exception
      */
     public function deleteMenu($instanceId)
@@ -151,8 +153,7 @@ class Page extends AbstractModule
     /**
      * summary
      *
-     * @param string $instanceId page instance id
-     *
+     * @param  string  $instanceId  page instance id
      * @return string
      */
     public function summary($instanceId)
@@ -174,8 +175,7 @@ class Page extends AbstractModule
      * Return URL about module's detail setting
      * getInstanceSettingURI
      *
-     * @param string $instanceId page instance id
-     *
+     * @param  string  $instanceId  page instance id
      * @return string|null
      */
     public static function getInstanceSettingURI($instanceId)
@@ -186,8 +186,7 @@ class Page extends AbstractModule
     /**
      * Get menu type's item object
      *
-     * @param string $id item id of menu type
-     *
+     * @param  string  $id  item id of menu type
      * @return mixed
      */
     public function getTypeItem($id)

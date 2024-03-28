@@ -1,4 +1,5 @@
 <?php
+
 return [
     'pageBasicSetting' => [
         'ko' => 'Page 기본 설정',

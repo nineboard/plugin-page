@@ -7,10 +7,11 @@
  * PHP version 7
  *
  * @category    Page
- * @package     Xpressengine\Plugins\Page
+ *
  * @author      XE Developers <developers@xpressengine.com>
  * @copyright   2019 Copyright XEHub Corp. <https://www.xehub.io>
  * @license     http://www.gnu.org/licenses/lgpl-3.0-standalone.html LGPL
+ *
  * @link        https://xpressengine.io
  */
 
@@ -20,39 +21,36 @@ use App\Http\Controllers\Controller;
 use App\Http\Sections\EditorSection;
 use App\Http\Sections\SkinSection;
 use Redirect;
-use XePresenter;
 use XeEditor;
 use XeLang;
 use XeMenu;
+use XePresenter;
 use XeStorage;
 use XeTag;
-use App;
 use Xpressengine\Http\Request;
 use Xpressengine\Plugins\Page\Models\PageComment;
-use Xpressengine\Plugins\Page\Module\Page as PageModule;
 use Xpressengine\Plugins\Page\Module\Page;
+use Xpressengine\Plugins\Page\Module\Page as PageModule;
 use Xpressengine\Plugins\Page\PageHandler;
 
 /**
  * PageManageController
  *
  * @category    Page
- * @package     Xpressengine\Plugins\Page
+ *
  * @author      XE Developers <developers@xpressengine.com>
  * @copyright   2019 Copyright XEHub Corp. <https://www.xehub.io>
  * @license     http://www.gnu.org/licenses/lgpl-3.0-standalone.html LGPL
+ *
  * @link        https://xpressengine.io
  */
 class PageManageController extends Controller
 {
     /**
-     * @var PageHandler $pageHandler
+     * @var PageHandler
      */
     protected $pageHandler;
 
-    /**
-     *
-     */
     public function __construct()
     {
         XePresenter::setSettingsSkinTargetId(PageModule::getId());
@@ -62,9 +60,8 @@ class PageManageController extends Controller
     /**
      * edit
      *
-     * @param Request $request request
-     * @param string  $pageId  page instance id
-     *
+     * @param  Request  $request  request
+     * @param  string  $pageId  page instance id
      * @return \Xpressengine\Presenter\Presentable
      */
     public function edit(Request $request, $pageId)
@@ -113,6 +110,7 @@ class PageManageController extends Controller
         $mobileThumbId = $handler->getThumbId($pageId, $mobilePage->id);
 
         XePresenter::widgetParsing(false);
+
         return XePresenter::make('edit', [
             'pcPage' => $pcPage,
             'mobilePage' => $mobilePage,
@@ -130,9 +128,8 @@ class PageManageController extends Controller
     /**
      * update
      *
-     * @param Request $request request
-     * @param string  $pageId  page instance id
-     *
+     * @param  Request  $request  request
+     * @param  string  $pageId  page instance id
      * @return \Illuminate\Http\RedirectResponse
      *
      * @throws \Exception
@@ -184,8 +181,7 @@ class PageManageController extends Controller
     /**
      * edit editor
      *
-     * @param string $pageId page id
-     *
+     * @param  string  $pageId  page id
      * @return mixed|\Xpressengine\Presenter\Presentable
      */
     public function editEditor($pageId)
@@ -203,8 +199,7 @@ class PageManageController extends Controller
     }
 
     /**
-     * @param string $pageId page id
-     *
+     * @param  string  $pageId  page id
      * @return mixed|\Xpressengine\Presenter\Presentable
      */
     public function editSkin($pageId)

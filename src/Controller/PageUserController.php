@@ -7,18 +7,19 @@
  * PHP version 7
  *
  * @category    Page
- * @package     Xpressengine\Plugins\Page
+ *
  * @author      XE Developers <developers@xpressengine.com>
  * @copyright   2019 Copyright XEHub Corp. <https://www.xehub.io>
  * @license     http://www.gnu.org/licenses/lgpl-3.0-standalone.html LGPL
+ *
  * @link        https://xpressengine.io
  */
 
 namespace Xpressengine\Plugins\Page\Controller;
 
 use App\Http\Controllers\Controller;
-use XePresenter;
 use XeLang;
+use XePresenter;
 use Xpressengine\Document\Models\Document;
 use Xpressengine\Http\Request;
 use Xpressengine\Plugins\Page\Module\Page as PageModule;
@@ -30,16 +31,17 @@ use Xpressengine\Routing\InstanceConfig;
  * PageUserController
  *
  * @category    Page
- * @package     Xpressengine\Plugins\Page
+ *
  * @author      XE Developers <developers@xpressengine.com>
  * @copyright   2019 Copyright XEHub Corp. <https://www.xehub.io>
  * @license     http://www.gnu.org/licenses/lgpl-3.0-standalone.html LGPL
+ *
  * @link        https://xpressengine.io
  */
 class PageUserController extends Controller
 {
     /**
-     * @var string $pageId page instance id
+     * @var string page instance id
      */
     protected $pageId;
 
@@ -56,9 +58,8 @@ class PageUserController extends Controller
     /**
      * index
      *
-     * @param Request     $request     request
-     * @param PageHandler $pageHandler page handler
-     *
+     * @param  Request  $request  request
+     * @param  PageHandler  $pageHandler  page handler
      * @return \Xpressengine\Presenter\Presentable
      */
     public function index(Request $request, PageHandler $pageHandler)
@@ -89,16 +90,15 @@ class PageUserController extends Controller
             'pageCommentTarget' => $pageCommentTarget,
             'title' => $page->title,
             'content' => $page->content,
-            'config' => $config
+            'config' => $config,
         ]);
     }
 
     /**
      * preview
      *
-     * @param Request     $request     request
-     * @param PageHandler $pageHandler page handler
-     *
+     * @param  Request  $request  request
+     * @param  PageHandler  $pageHandler  page handler
      * @return \Xpressengine\Presenter\Presentable
      */
     public function preview(Request $request, PageHandler $pageHandler)
@@ -123,7 +123,7 @@ class PageUserController extends Controller
         );
 
         $previewDoc = new Document($documentInputs);
-        $previewDoc->id = 'preview-' . app('xe.keygen')->generate();
+        $previewDoc->id = 'preview-'.app('xe.keygen')->generate();
         $previewDoc->instanceId = $pageId;
         $previewDoc->user()->associate($user);
 
@@ -139,7 +139,7 @@ class PageUserController extends Controller
             'page' => $page,
             'title' => $title,
             'content' => $content,
-            'config' => $config
+            'config' => $config,
         ]);
     }
 }

@@ -7,26 +7,28 @@
  * PHP version 7
  *
  * @category    Page
- * @package     Xpressengine\Plugins\Page
+ *
  * @author      XE Developers <developers@xpressengine.com>
  * @copyright   2019 Copyright XEHub Corp. <https://www.xehub.io>
  * @license     http://www.gnu.org/licenses/lgpl-3.0-standalone.html LGPL
+ *
  * @link        https://xpressengine.io
  */
 
 namespace Xpressengine\Plugins\Page\Skin;
 
-use Xpressengine\Skin\AbstractSkin;
 use View;
+use Xpressengine\Skin\AbstractSkin;
 
 /**
  * DefaultSkin
  *
  * @category    Page
- * @package     Xpressengine\Plugins\Page
+ *
  * @author      XE Developers <developers@xpressengine.com>
  * @copyright   2019 Copyright XEHub Corp. <https://www.xehub.io>
  * @license     http://www.gnu.org/licenses/lgpl-3.0-standalone.html LGPL
+ *
  * @link        https://xpressengine.io
  */
 class DefaultSkin extends AbstractSkin
@@ -54,12 +56,11 @@ class DefaultSkin extends AbstractSkin
     /**
      * getViewFilePath
      *
-     * @param string $view view name for render
-     *
+     * @param  string  $view  view name for render
      * @return string
      */
     public function getViewFilePath($view)
     {
-        return __DIR__ . '/../../views/defaultSkin/' . $view . '.blade.php';
+        return __DIR__.'/../../views/defaultSkin/'.$view.'.blade.php';
     }
 }
