@@ -52,8 +52,8 @@
         }
     },
     "require": {
-        "nineboard/nineboard": "dev-main",
-        "nineboard/plugin-ckeditor": "dev-main"
+        "nineboard/nineboard": "^3.0.0",
+        "nineboard/plugin-ckeditor": "^1.0.0"
     },
     "repositories": [
         {
